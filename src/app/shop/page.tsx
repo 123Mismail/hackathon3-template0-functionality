@@ -10,7 +10,7 @@ const CartPage = () => {
         <div className="  flex justify-center items-center h-[306px] flex-col z-50">
           <Image
             src={"/images/logo.png"}
-            className="-mb-[20px]"
+            className="-mb-[20px] object-cover"
             height={100}
             width={100}
             alt="logo image"

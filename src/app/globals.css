@@ -125,6 +125,7 @@ text-decoration-skip-ink: none;
   background-position: center; /* Centers the image */
   width: 100%; /* Adjust width as needed */
   opacity: 0.5;
+  
   z-index: -10;
    height: 316px;/* Set the height as per your requirements */
 }

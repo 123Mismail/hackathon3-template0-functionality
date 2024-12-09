@@ -9,8 +9,10 @@ import { MdOutlineAccessTimeFilled } from "react-icons/md";
 const MyAccount = () => {
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
-      <div className="w-full h-[306px] pagesBg overflow-hidden   ">
-        <div className="  flex justify-center items-center h-[306px] flex-col z-50">
+      <div className="w-full h-[306px] pagesBg md:max-w-[1440px]  overflow-hidden   ">
+       
+      </div>
+      <div className="  flex justify-center items-center h-[306px] flex-col z-50">
             <Image src={'/images/logo.png'} className="-mb-[20px]" height={100} width={100} alt="logo image"/>
             <h2 className="text-[48px] font-medium ">My Account</h2>
             <span className="flex justify-center items-center ">
@@ -19,7 +21,6 @@ const MyAccount = () => {
                  <Link href={'/'}>My Account</Link>
             </span>
         </div>
-      </div>
       <div className="w-full flex flex-col justify-center items-center py-10 lg:pt-32">
         
 

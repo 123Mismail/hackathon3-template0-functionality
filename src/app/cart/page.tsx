@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
+ 
 const CartPage = () => {
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
-      <div className="w-full h-[306px] pagesBg overflow-hidden   ">
-        <div className="  flex justify-center items-center h-[306px] flex-col z-50">
+      <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   ">
+       
+      </div>
+      <div className="  flex justify-center items-center h-[306px] flex-col z-50">
           <Image
             src={"/images/logo.png"}
             className="-mb-[20px]"
@@ -23,7 +24,6 @@ const CartPage = () => {
             <Link href={"/"}>Cart</Link>
           </span>
         </div>
-      </div>
       <div className="max-w-[1250px] flex flex-wrap justify-center items-center gap-6 p-10">
         <div className="max-w-[817px] flex flex-col gap-10 w-full">
           <ul className="flex flex-wrap justify-evenly items-center pl-0 md:pl-24  bg-[#FFF9E5] w-full h-[55px]  ">

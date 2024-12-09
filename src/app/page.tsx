@@ -15,9 +15,9 @@ const HomePage = () => {
     
       <TopPicks/>
 
+      <HeroChairs/>
       <OurBlogs/>
       <InstagramComp/>
-      <HeroChairs/>
 
     </div>
   )

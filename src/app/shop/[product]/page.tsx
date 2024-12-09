@@ -69,7 +69,7 @@ const page = () => {
               width={400}
               alt="ecommerce"
               className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded"
-              src="/images/shop2.png "
+              src="/images/shop2.png"
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">

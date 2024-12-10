@@ -25,7 +25,7 @@ const CartPage = () => {
           </span>
         </div>
       <div className="max-w-[1250px] flex flex-wrap justify-center items-center gap-6 p-10">
-        <div className="max-w-[817px] flex flex-col gap-10 w-full">
+        <div className="   md:max-w-[817px]    flex flex-col gap-10 w-full">
           <ul className="flex flex-wrap justify-evenly items-center pl-0 md:pl-24  bg-[#FFF9E5] w-full h-[55px]  ">
             <li>Product</li>
             <li className="ml-3">Price</li>
@@ -42,7 +42,7 @@ const CartPage = () => {
               ></Image>
             </li>
             <li>Asgaard sofa</li>
-            <li className="mr-5">Rs. 250,000.00</li>
+            <li className="mr-5 ml-4 md:ml-0">Rs. 250,000.00</li>
             <li>
               <span className="h-[20px] w-[20px] border p-2 rounded-lg border-1  mr-10">
                 1
@@ -60,7 +60,7 @@ const CartPage = () => {
           </div>
           <div></div>
         </div>
-        <div className="p-10 flex flex-col justify-center items-center gap-5 bg-[#FFF9E5]">
+        <div className="p-10 flex flex-col justify-center items-center gap-5   bg-[#FFF9E5]">
           <h2>Cart Totals</h2>
           <span className="flex justify-between items-center gap-8 text-[16] font-medium">
             {" "}

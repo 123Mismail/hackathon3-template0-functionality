@@ -282,7 +282,7 @@ const CartPage = () => {
                   <p>RS . 25,000</p>
                 </div>
               </div>
-              <div>
+              <div className="mt-16 md:mt-0">
                 <Link href={"/shop/product"}>
                   <Image
                     src={"/images/shop13.png"}

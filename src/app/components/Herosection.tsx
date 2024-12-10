@@ -4,7 +4,7 @@ import Image from "next/image";
 const Herosection = () => {
   return (
     <>
-      <div className="max-w-[1440px] mx-auto bg-[#FBEBB5] overflow-hidden relative  py-10 ">
+      <div className="max-w-[1440px] mx-auto bg-[#FBEBB5] overflow-hidden relative  py-10  px-10 mb-10">
         <div className="flex flex-wrap justify-center gap-[-20px] items-center w-full">
           {/* content */}
           <div className=" text-[#000000]  pl-10 lg:pl-0">

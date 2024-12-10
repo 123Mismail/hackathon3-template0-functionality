@@ -24,14 +24,14 @@ const CheckoutPage = () => {
             <Link href={"/"}>CheckOut</Link>
           </span>
         </div>
-      <div className="w-full flex flex-col justify-center items-center py-10 lg:pt-32">
+      <div className="w-full flex flex-col justify-center items-center pr-5 py-10 lg:pt-32">
         <div className="flex flex-wrap justify-center p-10   gap-10  py-10 w-full">
           {/* left */}
-          <div className="max-w-[635px] flex flex-col w-full  flex-1  justify-center items-start gap-3">
+          <div className="max-w-[635px] flex flex-col w-full   flex-1  justify-center items-start gap-3">
             <h2 className="text-[36px] font-semibold">Billing details</h2>
             <div className="flex justify-center gap-4">
               <div className="    ">
-                <span className="flex justify-center items-center gap-4 w-full">
+                <span className="flex justify-center   items-center gap-4 w-full">
                   <span className="w-full">
                     <label htmlFor="#">First Name</label> <br />
                     <br />
@@ -144,7 +144,7 @@ const CheckoutPage = () => {
           </div>
           {/* right */}
           <div className="max-w-[635px] flex flex-col w-full  flex-1  gap-3">
-            <div className="flex flex-col gap-5 px-10">
+            <div className="flex flex-col gap-5 px-0  md:px-10  ">
               <div className="flex justify-between items-center">
                 <h2 className="text-[24px] font-medium">Product</h2>
                 <h2 className="text-[24px] font-medium">Subtotal</h2>
@@ -168,7 +168,7 @@ const CheckoutPage = () => {
             </div>
             <div className="h-[1px] max-w-[535px] mx-auto bg-black/30 w-full  " />
 
-            <div className="flex flex-col gap-5 px-10">
+            <div className="flex flex-col gap-5 px:0 md:px-10   ">
               <div className="flex gap-2 justify-start   items-center">
                 <div className="h-3 w-3 bg-black rounded-full " />
                 <p>Direct Bank Transfer</p>

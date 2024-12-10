@@ -7,7 +7,7 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 const page = () => {
   return (
-    <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
+    <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden px-3   lg:pl-0 ">
       <div className="w-full h-[100px] flex  justify-start px-10 items-center ">
         <ul className="flex justify-start items-center gap-4">
           <li className="flex gap-3">
@@ -140,7 +140,7 @@ const page = () => {
                   </span>
                 </span>
               </div>
-              <p className="leading-relaxed text-[13px] font-normal">
+              <p className="leading-relaxed text-[13px] font-normal  ">
                 Setting the bar as one of the loudest speakers in its class, the
                 Kilburn is a compact, stout-hearted hero with a well-balanced
                 audio which boasts a clear midrange and extended highs for a
@@ -177,11 +177,11 @@ const page = () => {
                 </div>
                 <div  className="h-[2px] mt-10 w-full bg-[#D9D9D9]"/>
 
-              <div className="flex flex-col gap-5  py-7 ">
+              <div className="flex flex-col  gap-5   py-7 ">
                  <span className="text-[16px] text-[#9F9F9F] flex justify-start gap-10"> <h3>SKU</h3> <span>:  SS001</span></span>
                  <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-2"> <h3>Category</h3> <span>:  Sofas</span></span>
                  <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10"> <h3>Tags</h3> <span>:  Sofa, Chair, Home, Shop</span></span>
-                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10"> <h3>Share</h3> <span className="text-black flex  justify-start items-center gap-10 text-xl">:<FaFacebook/> <FaLinkedin className="rounded-[100px]"/><AiFillTwitterCircle/></span>  
+                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10"> <h3>Share</h3> <span className="text-black flex  justify-start items-center gap-5 md:gap-10 text-xl">:<FaFacebook/> <FaLinkedin className="rounded-[100px]"/><AiFillTwitterCircle/></span>  
                <CiHeart className="text-5xl text-[#FF0000] "/>
 </span>
               </div>
@@ -193,7 +193,7 @@ const page = () => {
       <div  className="h-[1.3px] bg-black/40 w-full max-w-[1440px]"/>
      <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
 
-      <div className="max-w-[650px] mx-auto text-[24px] px-5 flex justify-between ">
+      <div className="max-w-[650px] mx-auto text-[24px] px-5 flex flex-wrap justify-between ">
         <h2>Description</h2>
         <p className="text-[#9F9F9F]">Additional Information</p>
         <p className="text-[#9F9F9F]">Reviews [5]</p>

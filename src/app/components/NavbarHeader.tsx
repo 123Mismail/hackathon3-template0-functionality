@@ -116,14 +116,14 @@ const NavbarHeader = () => {
       {/* mobile navbar */}
 
       <div className="block md:hidden absolute right-10 top-[35px]   ">
-        <Sheet>
+        <Sheet >
           <SheetTrigger asChild className="flex justify-end items-center">
-            <Button variant="outline" className="bg-[#FBEBB5] ">
+            <Button variant="outline">
               <GiHamburgerMenu />
             </Button>
           </SheetTrigger>
-          <SheetContent>
-            <div className="   flex flex-col justify-center items-center  max-w-[1440px] bg-[#FBEBB5] gap-12 mx-auto pt-5">
+          <SheetContent className="w-full  h-screen">
+            <div className="   flex flex-col justify-center items-center  max-w-[1440px]  bg-white gap-12 mx-auto pt-5">
               <div>
                 <ul className="flex flex-col justify-center items-center gap-4 tex-[16px] font-normal felx-wrap">
                   <li className="active-underline cursor-pointer  ">

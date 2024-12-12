@@ -19,7 +19,7 @@ const ContactPage = () => {
                  <Link href={'/'}>Contact</Link>
             </span>
         </div>
-      <div className="w-full flex flex-col justify-center items-center py-10 lg:pt-32">
+      <div className="w-full flex flex-col justify-center items-center py-10 px-9 md:px-0 lg:pt-32">
         <h2 className="text-[36px] font-semibold">Get In Touch With Us</h2>
         <p className="max-w-[644px]  w-full text-[#9F9F9F] text-center leading-8">
           For More Information About Our Product & Services. Please Feel Free To

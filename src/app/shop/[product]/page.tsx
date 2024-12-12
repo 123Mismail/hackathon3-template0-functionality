@@ -1,4 +1,4 @@
-import { FaFacebook ,FaLinkedin} from "react-icons/fa";
+import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,7 +25,7 @@ const page = () => {
 
       <section className=" body-font overflow-hidden">
         <div className="container flex flex-col gap-4 lg:flex-row px-5 py-24 mx-auto">
-          <div className=" float-left   flex   lg:flex-col  justify-between items-center gap-14">
+          <div className=" float-left   flex    lg:flex-col  justify-center items-center  gap-4 md:gap-10  ">
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
                 src={"/images/shop2.png"}
@@ -162,64 +162,94 @@ const page = () => {
                       <option>L</option>
                       <option>XL</option>
                     </select>
-                 
                   </div>
                 </div>
-               
               </div>
               <div className="flex justify-start items-center gap-4">
-                  <span className=" h-10 w-24 border border-1 border-[#9F9F9F] p-8 rounded-[15px] flex justify-center items-center gap-4 px-5 py-6 "> 
+                <span className=" h-10 w-24 border border-1 border-[#9F9F9F] p-8 rounded-[15px] flex justify-center items-center gap-4 px-5 py-6 ">
                   <span>-</span>
                   <span>1</span>
                   <span>+</span>
-                  </span>
-                  <button className="px-12 py-4   border-2 rounded-[15px]">Add To Cart</button>
-                </div>
-                <div  className="h-[2px] mt-10 w-full bg-[#D9D9D9]"/>
+                </span>
+                <button className="px-12 py-4   border-2 rounded-[15px]">
+                  Add To Cart
+                </button>
+              </div>
+              <div className="h-[2px] mt-10 w-full bg-[#D9D9D9]" />
 
               <div className="flex flex-col  gap-5   py-7 ">
-                 <span className="text-[16px] text-[#9F9F9F] flex justify-start gap-10"> <h3>SKU</h3> <span>:  SS001</span></span>
-                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-2"> <h3>Category</h3> <span>:  Sofas</span></span>
-                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10"> <h3>Tags</h3> <span>:  Sofa, Chair, Home, Shop</span></span>
-                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10"> <h3>Share</h3> <span className="text-black flex  justify-start items-center gap-5 md:gap-10 text-xl">:<FaFacebook/> <FaLinkedin className="rounded-[100px]"/><AiFillTwitterCircle/></span>  
-               <CiHeart className="text-5xl text-[#FF0000] "/>
-</span>
+                <span className="text-[16px] text-[#9F9F9F] flex justify-start gap-10">
+                  {" "}
+                  <h3>SKU</h3> <span>: SS001</span>
+                </span>
+                <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-2">
+                  {" "}
+                  <h3>Category</h3> <span>: Sofas</span>
+                </span>
+                <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10">
+                  {" "}
+                  <h3>Tags</h3> <span>: Sofa, Chair, Home, Shop</span>
+                </span>
+                <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10">
+                  {" "}
+                  <h3>Share</h3>{" "}
+                  <span className="text-black flex  justify-start items-center gap-5 md:gap-10 text-xl">
+                    :<FaFacebook /> <FaLinkedin className="rounded-[100px]" />
+                    <AiFillTwitterCircle />
+                  </span>
+                  <CiHeart className="text-5xl text-[#FF0000] " />
+                </span>
               </div>
             </div>
           </div>
         </div>
       </section>
-     {/*  */}
-      <div  className="h-[1.3px] bg-black/40 w-full max-w-[1440px]"/>
-     <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
-
-      <div className="max-w-[650px] mx-auto text-[24px] px-5 flex flex-wrap justify-between ">
-        <h2>Description</h2>
-        <p className="text-[#9F9F9F]">Additional Information</p>
-        <p className="text-[#9F9F9F]">Reviews [5]</p>
-
-      </div>
-      <div className="max-w-[1026px] px-5 text-[16px] leading-7 text-[#9F9F9F] mx-auto  flex flex-col gap-6 py-4">
-        <p>Embodying the raw, wayward spirit of rock ‘n’ roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.</p>
-        <p>Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</p>
-      </div>
-      <div className="max-w-[1239px] w-full flex  flex-col md:flex-row px-5 gap-4 mx-auto ">
-
-        <div className="bg-[#FFF9E5]    overflow-hidden h-[348px] flex jsutify-center items-center">
-          <Image src={'/images/productSofa.png'} className="object-cover object-bottom w-[600px]" height={500} width={500} alt="sofa set image "></Image>
+      {/*  */}
+      <div className="h-[1.3px] bg-black/40 w-full max-w-[1440px]" />
+      <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
+        <div className="max-w-[650px] mx-auto text-[24px] px-5 flex flex-wrap justify-between ">
+          <h2>Description</h2>
+          <p className="text-[#9F9F9F]">Additional Information</p>
+          <p className="text-[#9F9F9F]">Reviews [5]</p>
         </div>
-        <div className="bg-[#FFF9E5] overflow-hidden h-[348px] flex justify-center items-center">
-  <Image
-    src={'/images/product.png'}
-    className="object-contain object-center w-[600px]"
-    height={500}
-    width={500}
-    alt="sofa set image"
-  />
-</div>
+        <div className="max-w-[1026px] px-5 text-[16px] leading-7 text-[#9F9F9F] mx-auto  flex flex-col gap-6 py-4">
+          <p>
+            Embodying the raw, wayward spirit of rock ‘n’ roll, the Kilburn
+            portable active stereo speaker takes the unmistakable look and sound
+            of Marshall, unplugs the chords, and takes the show on the road.
+          </p>
+          <p>
+            Weighing in under 7 pounds, the Kilburn is a lightweight piece of
+            vintage styled engineering. Setting the bar as one of the loudest
+            speakers in its class, the Kilburn is a compact, stout-hearted hero
+            with a well-balanced audio which boasts a clear midrange and
+            extended highs for a sound that is both articulate and pronounced.
+            The analogue knobs allow you to fine tune the controls to your
+            personal preferences while the guitar-influenced leather strap
+            enables easy and stylish travel.
+          </p>
+        </div>
+        <div className="max-w-[1239px] w-full flex  flex-col md:flex-row px-5 gap-4 mx-auto ">
+          <div className="bg-[#FFF9E5]    overflow-hidden h-[348px] flex jsutify-center items-center">
+            <Image
+              src={"/images/productSofa.png"}
+              className="object-cover object-bottom mb-28 w-[600px]"
+              height={500}
+              width={500}
+              alt="sofa set image "
+            ></Image>
+          </div>
+          <div className="bg-[#FFF9E5] overflow-hidden h-[348px] flex justify-center items-center">
+            <Image
+              src={"/images/product.png"}
+              className="object-contain object-center  w-[600px] mb-28"
+              height={500}
+              width={500}
+              alt="sofa set image"
+            />
+          </div>
+        </div>
       </div>
-     </div>
-
 
       {/* related  */}
 
@@ -292,9 +322,12 @@ const page = () => {
           </div>
         </div>
         <div className=" flex justify-center items-center p-6 mt-6">
-         <Link href={'/shop'}> <button className="underline underline-offset-8 mx-auto text-[20px] font-medium">
-            View All
-          </button></Link>
+          <Link href={"/shop"}>
+            {" "}
+            <button className="underline underline-offset-8 mx-auto text-[20px] font-medium">
+              View All
+            </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@ const OurBlogs = () => {
         </div>
       </div>
       <div className=" flex justify-center items-center p-6 mt-6">
-        <Link href={"/"}>
+        <Link href={"/blogs"}>
           {" "}
           <button className="underline underline-offset-8 mx-auto text-[20px] font-medium">
             View All

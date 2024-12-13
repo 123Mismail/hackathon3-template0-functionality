@@ -18,7 +18,7 @@ const TopPicks = () => {
             height={350}
             width={350}
             alt="blogs laptop images"
-            className="w-[330px] h-[250px]   object-contain"
+            className="w-[230px] h-[250px]   object-contain object-bottom "
           />
           <div className="flex flex-col gap-6 justify-center items-center text-center">
             <p className="text-center pt-3">

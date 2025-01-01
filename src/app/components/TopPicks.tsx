@@ -3,7 +3,7 @@ import React from "react";
 
 const TopPicks = () => {
   return (
-    <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10  px-10">
+    <div className="max-w-[1440px] mx-auto relative overflow-hidden bg-[#FFFFFF] py-10  px-10">
       <div className=" flex flex-col justify-center items-center gap-14 pb-8 ">
         <h2 className="text-[36px] font-medium">Top Picks For You</h2>
         <p className="text-[#9F9F9F] text-[16px] font-medium  pb-5">

@@ -19,10 +19,10 @@ const Herosection = () => {
           {/* image */}
           <div>
             <Image
-              src={"/images/heroimage.png"}
+              src={"/images/mainchair.png"}
               height={500}
               width={500}
-              className="max-w-[853px] w-full"
+              className="max-w-[853px] w-full  "
 
               alt="seat image"
             ></Image>

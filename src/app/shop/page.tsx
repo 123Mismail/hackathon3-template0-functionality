@@ -25,7 +25,7 @@ const CartPage = () => {
           </span>
         </div>
       <div className="max-w-[1440px]  flex flex-wrap justify-center items-center gap-6  py-3">
-        <div className="w-full bg-[#FAF4F4] h-[100px]  flex flex-wrap px-3 md:px-0 justify-around items-center">
+        <div className="w-full   h-[100px]  flex flex-wrap px-3 md:px-0 justify-around items-center">
           <div>
             <ul className="flex justify-start gap-7 items-center">
               <li className="flex gap-1">
@@ -95,7 +95,7 @@ const CartPage = () => {
           </div>
         </div>
 
-        <div className="w-full ">
+        <div className="w-full bg-white">
           <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
             <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0   gap-4 md:gap-0  ">
               <div>

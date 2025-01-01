@@ -3,6 +3,7 @@
 @tailwind utilities;
 body{
     font-family:sans-serif;
+    background-color: #FAF4F4;
 }
 
  .navLogo{
@@ -58,7 +59,7 @@ text-decoration-skip-ink: none;
   opacity: 0.5;
    
   z-index: -10;
-   height: 400px;/* Set the height as per your requirements */
+   height: 450px;/* Set the height as per your requirements */
 }
 .pagesBg {
   background-image: url('/images/pgaesBg.jpeg');

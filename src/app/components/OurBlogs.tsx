@@ -5,7 +5,7 @@ import { FaRegCalendarMinus } from "react-icons/fa";
 import Link from "next/link";
 const OurBlogs = () => {
   return (
-    <div className="max-w-[1440px] mx-auto   overflow-hidden  py-10  px-10">
+    <div className="max-w-[1440px] mx-auto bg-[#FFFFFF]  overflow-hidden  py-10  px-10">
       <div className=" flex flex-col justify-center items-center gap-8 ">
         <h2 className="text-[36px] font-medium">Our Blogs</h2>
         <p className="text-[#9F9F9F] pb-5">

@@ -1,5 +1,5 @@
 
-
+ 
 import React from 'react'
 import Herosection from './components/Herosection'
  
@@ -11,7 +11,9 @@ import Hero1 from './components/Hero1'
 
 const HomePage = () => {
   return (
-    <div >
+     
+      
+      <div >
       <Herosection/>
       <Hero1/>
       <TopPicks/>
@@ -21,6 +23,8 @@ const HomePage = () => {
       <InstagramComp/>
 
     </div>
+   
+   
   )
 }
 

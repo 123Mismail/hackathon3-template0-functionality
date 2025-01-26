@@ -1,11 +1,50 @@
+
+"use client"
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiFillTwitterCircle } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
-const page = () => {
+import { client } from "@/sanity/lib/client";
+
+interface Iproduct{
+  imagePath: string,
+  description: string,
+  stockLevel: number,
+  price: number,
+  category: string,
+  name: string,
+  id:number
+
+}
+  
+const page = ({params}:{params:any}) => {
+
+  const [productsData , setProductsData] = useState<Iproduct[]>()
+          
+            useEffect(()=>{
+               
+            const fetchDataFromSanity= async()=>{
+              const {id}= await params 
+              const fetchedData =await  client.fetch(`*[_type=="product" && id=='${id}' ]{
+                name,id,imagePath,description,stockLevel,price,category
+               
+             }`)
+             console.log(fetchedData ,"data from sanity; in line 35")
+             setProductsData(fetchedData)
+            }
+            fetchDataFromSanity()
+            
+            },[])
+         
+ 
+// console.log(productsData[0] ,"product data that mathces the id is fetching inline 43 ")
+  //  console.log(id ,"trying to console the params values ")
+       
+
+        //  console.log(productsData ,"product data is fetching")
   return (
     <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden px-3   lg:pl-0 ">
       <div className="w-full h-[100px] flex  justify-start px-10 items-center ">
@@ -63,19 +102,22 @@ const page = () => {
               ></Image>
             </div>
           </div>
+          {
+   
+          }
           <div className="lg:w-4/5 mx-auto flex flex-wrap ">
             <Image
               height={400}
               width={400}
               alt="ecommerce"
               className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded"
-              src="/images/shop2.png"
+              src={'/images/shop3.png'}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                Asgaard sofa
+               name  
               </h1>
-              <p>Rs. 250,000.00</p>
+              <p>Rs. </p>
               <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg

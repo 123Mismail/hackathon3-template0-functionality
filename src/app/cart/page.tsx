@@ -23,6 +23,7 @@ const CartPage = () => {
   const detailArray=Object.values(cartDetails!)
   console.log(detailArray ,"card details in array format ")
   console.log( typeof cartDetails,"details of all card in card")
+
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   ">
@@ -92,13 +93,17 @@ const CartPage = () => {
                     >remove</button>
                   </ul>
                   <div className=" mx-auto block md:hidden">
+                    { product.image ? 
+                      <Image
+                      src={product.image }
+                      height={150}
+                      width={150}
+                      alt="sofa set image"
+                    ></Image> :
+                    <p>Loading image</p>
                     
-                  <Image
-                        src={product.image }
-                        height={150}
-                        width={150}
-                        alt="sofa set image"
-                      ></Image>
+                  }
+                 
                       
                   
                   </div>

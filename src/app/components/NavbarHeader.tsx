@@ -12,7 +12,7 @@ import Image from "next/image";
 
 const NavbarHeader = () => {
   
-  const { addItem, cartDetails, totalPrice } = useShoppingCart();
+  const { addItem, cartDetails, totalPrice ,removeItem} = useShoppingCart();
   const cartArray = cartDetails ? Object.values(cartDetails) : [];
 
 console.log(cartArray);
@@ -103,7 +103,7 @@ console.log(  cartDetails , "total no items in card ");
 
                   </Button>
                 </SheetTrigger>
-                <SheetContent className="flex flex-col justify-between   bg-white  px-0 min-h-[746px] max-w-[417px] w-full  overflow-y-auto ">
+                <SheetContent className="flex flex-col justify-between  bg-white  px-0 min-h-[746px] max-w-[417px] w-full  overflow-y-auto ">
                   <div className="px-5 scroll-mx-2">
                     <h3 className="text-[24px] font-semibold">Shopping Cart</h3>
                     <div className="h-[1px] w-[287px]  bg-black/40 mt-10 "  />
@@ -114,21 +114,26 @@ console.log(  cartDetails , "total no items in card ");
                         <div className="mt-5 flex  justify-between items-center gap-4">
                         <Image
                           src={data?.image  || "/images/shop1.png"}
-                          className="bg-[#FBEBB5]   rounded-[9px]"
+                          className="bg-[#FBEBB5] h-[100px] w-[120px]   rounded-[9px]"
                           height={50}
                           width={100}
+                           
                           alt="card image of producrt selected"
                         />
                         <div className=" flex justify-center items-center gap-4">
-                          <div> <h3 className="text-[24px] font-normal">
+                          <div> <h3 className="text-[20px] font-normal">
                             {data?.name}
                           </h3>
                           <span className="flex justify-between gap-4 items-center">
-                            1 <span className="text-xl font-light">x</span>
+                            {data.quantity} <span className="text-xl font-light">x</span>
                             <p className="text-[#B88E2F] font-medium">Rs.{data.price}</p>
                           
                           </span></div>
-                          <svg
+                         <button 
+                         onClick={()=>removeItem(data.id)}
+                         >
+
+                         <svg
                               width="20"
                               height="20"
                               viewBox="0 0 20 20"
@@ -142,6 +147,7 @@ console.log(  cartDetails , "total no items in card ");
                                 fill="#9F9F9F"
                               />
                             </svg>
+                         </button>
                         </div>
                       </div>
                    ))}
@@ -177,12 +183,12 @@ console.log(  cartDetails , "total no items in card ");
 
       <div className="block md:hidden absolute right-10 top-[35px]   ">
         <Sheet>
-          <SheetTrigger asChild className="flex justify-end items-center">
+          <SheetTrigger asChild className="flex justify-end items-center ">
             <Button variant="outline">
               <GiHamburgerMenu />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-full  h-screen">
+          <SheetContent className="w-full  h-screen overflow-y-auto">
             <div className="   flex flex-col justify-center items-center  max-w-[1440px]  bg-white gap-12 mx-auto pt-5">
               <div>
                 <ul className="flex flex-col justify-center items-center gap-4 tex-[16px] font-normal felx-wrap">

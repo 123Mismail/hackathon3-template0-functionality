@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,43 +7,77 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiFillTwitterCircle } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { client } from "@/sanity/lib/client";
+import { useShoppingCart } from "use-shopping-cart";
 
-interface Iproduct{
-  imagePath: string,
-  description: string,
-  stockLevel: number,
-  price: number,
-  category: string,
-  name: string,
-  id:number
-
+interface Iproduct {
+  imagePath: string;
+  sku:string,
+  description: string;
+  currency:string,
+  stockLevel: number;
+  price: number;
+  category: string;
+  name: string;
+  id: number;
 }
-  
-const page = ({params}:{params:any}) => {
 
-  const [productsData , setProductsData] = useState<Iproduct[]>()
-          
-            useEffect(()=>{
-               
-            const fetchDataFromSanity= async()=>{
-              const {id}= await params 
-              const fetchedData =await  client.fetch(`*[_type=="product" && id=='${id}' ]{
+const page = ({ params }: { params: any }) => {
+  const [productsData, setProductsData] = useState<Iproduct>();
+  const [countProduct , setCountProduct] =useState<number>(1)
+  const {cartDetails , decrementItem , incrementItem , addItem}=useShoppingCart()
+  if(cartDetails && productsData !== undefined ){
+    
+     
+    //  const arrayProduct= Object.values(cartDetails)
+    //      console.log(  arrayProduct[4].id ,"checking id values in line 32")
+    //      console.log (  productsData.id , "trying to check the id value in line 33")
+    //  const requiredProduct = arrayProduct.filter((val)=>  val.id == String(productsData.id))
+    //  console.log(requiredProduct,"products detail in   " )
+     
+
+  }
+  useEffect(() => {
+    const fetchDataFromSanity = async () => {
+      const { id } = await params;
+      const fetchedData =
+        await client.fetch(`*[_type=="product" && id=='${id}' ][0]{
                 name,id,imagePath,description,stockLevel,price,category
                
-             }`)
-             console.log(fetchedData ,"data from sanity; in line 35")
-             setProductsData(fetchedData)
-            }
-            fetchDataFromSanity()
-            
-            },[])
-         
- 
-// console.log(productsData[0] ,"product data that mathces the id is fetching inline 43 ")
-  //  console.log(id ,"trying to console the params values ")
-       
+             }`);
+      if(fetchedData!== undefined){
 
-        //  console.log(productsData ,"product data is fetching")
+        setProductsData(fetchedData);
+      }
+      
+    };
+    fetchDataFromSanity();
+  }, []);
+  
+  // handel increment item into card 
+  
+  const handelCardDataCountIncrement= ()=>{
+    setCountProduct( (countProduct)=> countProduct + 1)
+    if(productsData!==undefined)
+    addItem(productsData);
+  }
+  const handelCardDataCountDecrement= ()=>{
+    if(countProduct>1){
+
+      setCountProduct( (countProduct)=> countProduct - 1)
+    }else{
+      setCountProduct( (countProduct)=> countProduct)
+    }
+    if(productsData!==undefined)
+      decrementItem(String(productsData.id));
+  }
+
+  console.log(productsData, "trying to fetch mathed data from sanity");
+  if (!productsData) {
+    return <div className="min-h-screen  w-full text-center mx-auto flex justify-center items-center">
+      <p>Loading...</p>
+    </div>
+    ; // Render a loading state or appropriate message
+  }
   return (
     <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden px-3   lg:pl-0 ">
       <div className="w-full h-[100px] flex  justify-start px-10 items-center ">
@@ -67,7 +100,7 @@ const page = ({params}:{params:any}) => {
           <div className=" float-left   flex    lg:flex-col  justify-center items-center  gap-4 md:gap-10  ">
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
-                src={"/images/shop2.png"}
+                src={productsData?.imagePath}
                 className="object-cover rotate-[180deg]"
                 height={250}
                 width={250}
@@ -76,7 +109,7 @@ const page = ({params}:{params:any}) => {
             </div>
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
-                src={"/images/shop2.png"}
+                src={productsData?.imagePath}
                 className="object-cover rotate-[90deg]"
                 height={250}
                 width={250}
@@ -85,7 +118,7 @@ const page = ({params}:{params:any}) => {
             </div>
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
-                src={"/images/shop2.png"}
+                src={productsData?.imagePath}
                 className="object-cover rotate-[360deg]"
                 height={250}
                 width={250}
@@ -94,7 +127,7 @@ const page = ({params}:{params:any}) => {
             </div>
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
-                src={"/images/shop2.png"}
+                src={productsData?.imagePath}
                 className="object-cover rotate-[270deg]"
                 height={250}
                 width={250}
@@ -102,22 +135,21 @@ const page = ({params}:{params:any}) => {
               ></Image>
             </div>
           </div>
-          {
-   
-          }
+          {}
           <div className="lg:w-4/5 mx-auto flex flex-wrap ">
+
             <Image
               height={400}
               width={400}
               alt="ecommerce"
               className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded"
-              src={'/images/shop3.png'}
+              src={productsData?.imagePath}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-               name  
+                {productsData?.name}
               </h1>
-              <p>Rs. </p>
+              <p>Rs.{productsData?.price} </p>
               <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg
@@ -183,10 +215,7 @@ const page = ({params}:{params:any}) => {
                 </span>
               </div>
               <p className="leading-relaxed text-[13px] font-normal  ">
-                Setting the bar as one of the loudest speakers in its class, the
-                Kilburn is a compact, stout-hearted hero with a well-balanced
-                audio which boasts a clear midrange and extended highs for a
-                sound.
+               {productsData?.description}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
@@ -209,11 +238,18 @@ const page = ({params}:{params:any}) => {
               </div>
               <div className="flex justify-start items-center gap-4">
                 <span className=" h-10 w-24 border border-1 border-[#9F9F9F] p-8 rounded-[15px] flex justify-center items-center gap-4 px-5 py-6 ">
-                  <span>-</span>
-                  <span>1</span>
-                  <span>+</span>
+                  <span className="cursor-pointer"
+                    onClick={()=>handelCardDataCountDecrement()}
+                   >-</span>
+                  <span>{countProduct}</span>
+                  <span
+                   className="cursor-pointer"
+                   onClick={()=>handelCardDataCountIncrement()}
+                  >+</span>
                 </span>
-                <button className="px-12 py-4   border-2 rounded-[15px]">
+                <button className="px-12 py-4   border-2 rounded-[15px]"
+                onClick={()=>addItem(productsData)}
+                >
                   Add To Cart
                 </button>
               </div>
@@ -222,11 +258,11 @@ const page = ({params}:{params:any}) => {
               <div className="flex flex-col  gap-5   py-7 ">
                 <span className="text-[16px] text-[#9F9F9F] flex justify-start gap-10">
                   {" "}
-                  <h3>SKU</h3> <span>: SS001</span>
+                  <h3>SKU</h3> <span>: {productsData.sku}</span>
                 </span>
                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-2">
                   {" "}
-                  <h3>Category</h3> <span>: Sofas</span>
+                  <h3>Category</h3> <span>: {productsData.category}</span>  
                 </span>
                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10">
                   {" "}

@@ -1,9 +1,20 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useShoppingCart } from "use-shopping-cart";
 
 const CheckoutPage = () => {
+  const {cartDetails, totalPrice}=useShoppingCart<any>()
+  let arrayProductData:any = []
+  const objectLength= Object.keys( cartDetails)
+  if(objectLength.length>0){
+
+    arrayProductData= Object.values(cartDetails!);
+
+    console.log(arrayProductData,"card details ")
+  }
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
       <div className="w-full h-[306px] pagesBg  md:max-w-[1440px] overflow-hidden   ">
@@ -146,26 +157,41 @@ const CheckoutPage = () => {
           <div className="max-w-[635px] flex flex-col w-full  flex-1  gap-3">
             <div className="flex flex-col gap-5 px-0  md:px-10  ">
               <div className="flex justify-between items-center">
-                <h2 className="text-[24px] font-medium">Product</h2>
-                <h2 className="text-[24px] font-medium">Subtotal</h2>
+                <h2 className="text-[24px] flex-1 font-medium">Product</h2>
+                <h2 className="text-[24px] flex-1 font-medium">Quantity</h2>
+                <h2 className="text-[24px] flex-1 font-medium">Subtotal</h2>
               </div>
-              <div className="flex justify-between items-center">
-                <h2 className="   text-[16px] font-normal ">
-                  Asgaard sofa <span>x 1</span>
-                </h2>
-                <h2 className="text-[16px] font-light">Rs. 250,000.00</h2>
+             
+              
+                {
+               arrayProductData.map((details:any,id:number)=>(
+                < div key={id}  >
+                 <div className="flex justify-between items-center">
+                <h2 className="   flex-1 text-[16px] font-normal ">
+                  {details.name} 
+                </h2><span className="flex-1">{details.quantity}</span>
+                <h2 className="text-[16px] flex-1 font-light">Rs.{details.price}</h2>
               </div>
-              <div className="flex justify-between items-center">
-                <h2 className="   text-[16px] font-normal ">Subtotal</h2>
-                <h2 className="text-[16px] font-light">Rs. 250,000.00</h2>
+
+              <div className="flex justify-between items-center  ">
+                <h2 className="    text-[16px] font-normal ">Subtotal</h2>
+                <h2 className="   text-[16px] font-light">Rs. {details.quantity>0 ? details.quantity*details.price : details.price  }</h2>
               </div>
+              </div>
+ )) 
+}
+              
               <div className="flex justify-between items-center">
                 <h2 className="text-[16px] font-normal">Total</h2>
                 <h2 className="text-[#B88E2F]  text-[24px] font-bold">
-                  Rs. 250,000.00
+                  Rs. {totalPrice}
                 </h2>
               </div>
-            </div>
+              </div>
+              
+             
+             
+         
             <div className="h-[1px] max-w-[535px] mx-auto bg-black/30 w-full  " />
 
             <div className="flex flex-col gap-5 px:0 md:px-10   ">
@@ -187,7 +213,11 @@ const CheckoutPage = () => {
                 <p className="text-[16px] font-medium text-[#9F9F9F]">Direct Bank Transfer</p>
               </div>
               <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
-              <button className="px-10 py-2 rounded-2xl border border-1 mx-auto text-center">Place order</button>
+          <Link href={'/transactionSuccessfull'}>
+          <button className="px-10 py-2 rounded-2xl border border-1 mx-auto text-center"
+              
+              >Place order</button>
+          </Link>
             </div>
           </div>
         </div>

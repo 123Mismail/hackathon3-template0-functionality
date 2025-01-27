@@ -158,7 +158,7 @@ useEffect(()=>{
               {/* main div  */}
                {
                   fetchedData &&  fetchedData.map((product:Iproducts)=>(
-                    <div className="mt-6">
+                    <div className="mt-6" key={product.id}>
                     <Link href={`/shop/${product.id}`}>
                       <Image
                         src={product.imagePath}

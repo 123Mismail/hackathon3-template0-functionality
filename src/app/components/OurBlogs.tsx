@@ -6,6 +6,7 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import Loader from "./loader";
 import { urlFor } from "@/sanity/lib/image";
+import {format , parseISO} from "date-fns"
 const OurBlogs = async () => {
   interface ImageAsset {
     _type: "image";
@@ -36,7 +37,10 @@ const OurBlogs = async () => {
 
   const blogs = await fetchBlogs();
 
-  console.log(blogs, "blogs page i s");
+ const formatDate = (isoDateString:string) => {
+      const date = parseISO(isoDateString);
+      return format(date, 'MMMM dd, yyyy hh:mm a');
+    };
 
   return (
     <div className="max-w-[1440px] mx-auto bg-[#FFFFFF]  overflow-hidden  py-10  px-10">
@@ -70,7 +74,7 @@ const OurBlogs = async () => {
                   <IoTimeOutline />
                    
                   <FaRegCalendarMinus />
-                  <p>{blog.date}</p>
+                  <p>{formatDate(blog.date)}</p>
                 </span>
               </div>
             </div>

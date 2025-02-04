@@ -66,56 +66,74 @@ const CartPage = () => {
                     <li>Subtotal</li>
                   </ul>
 
-                  {detailArray.map((product)=>(
-                  <div  >
-                  <ul className="flex justify-between items-center   h-[55px] w-full">
-                    <li className="bg-[#FFF9E5]     -mr-5 hidden md:block flex-1 mb-2">
-                       { product.image ?  <Image
-                        src={product.image}
-                        height={90}
-                        width={90}
-                        alt="sofa set image"
-                        className="h-[70px] w-[100px] object-cover mb-3"
-                      ></Image> : <Loader/>  }
-                       
-                     
-                    </li>
-                    <li className="flex-1 ml-2 line-clamp-2 max-w-24">{product.name}</li>
-                    <li className="mr-5 ml-4 md:ml-0 flex-1">
-                      
-                      {product.price}</li>
-                    <li className="
-                    flex-1">
-                      <span className="h-[20px] w-[20px] border p-2 rounded-lg border-1  mr-10">
-                       {product.quantity}
-                      </span>
-                    </li>
-                    <li className="mr-8 flex-1">Rs { product.quantity>1 ? product.quantity*product.price : product.price}</li>
-                    <button className="flex-1 px-4 py-2 bg-red-400 text-black hidden md:block"
-                     onClick={()=>removeItem(product.id)}
-                    >remove</button>
-                  </ul>
-                  <div className=" mx-auto flex justify-between items-center  md:hidden mb-2">
-                    { product.image ? 
-                      <Image
-                      src={product.image}
-                      height={150}
-                      width={150}
-                      className="h-[70px] w-[100px] mt-2"
-                      alt="sofa set image"
-                    ></Image> :
-                    <Loader/>
-                    
-                  }
-                 
-                 <button className=" px-3 h-10 bg-red-400 text-black "
-                     onClick={()=>removeItem(product.id)}
-                    >remove</button> 
-                  
-                  </div>
-               
-                  </div>
-                   ))}
+                  {detailArray.map((product) => (
+  <div key={product.id} className="border-b border-gray-200 py-4">
+    {/* Desktop View */}
+    <ul className="hidden md:flex justify-between items-center h-[55px] w-full">
+      <li className="bg-[#FFF9E5] -mr-5 flex-1 mb-2">
+        {product.imagePath ? (
+          <Image
+            src={product.imagePath}
+            height={90}
+            width={90}
+            alt="sofa set image"
+            className="h-[70px] w-[100px] object-cover mb-3 rounded-lg"
+          />
+        ) : (
+          <Loader />
+        )}
+      </li>
+      <li className="flex-1 ml-2 line-clamp-2 max-w-24 text-gray-700 font-medium">
+        {product.name}
+      </li>
+      <li className="mr-5 ml-4 md:ml-0 flex-1 text-gray-600">
+        Rs {product.price}
+      </li>
+      <li className="flex-1">
+        <span className="h-[20px] w-[20px] border p-2 rounded-lg border-gray-300 mr-10 flex items-center justify-center text-gray-700">
+          {product.quantity}
+        </span>
+      </li>
+      <li className="mr-8 flex-1 text-gray-700 font-semibold">
+        Rs {product.quantity > 1 ? product.quantity * product.price : product.price}
+      </li>
+      <button
+        className="flex-1 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition duration-300"
+        onClick={() => removeItem(product.id)}
+      >
+        Remove
+      </button>
+    </ul>
+
+    {/* Mobile View */}
+    <div className="md:hidden flex justify-between items-center mb-2">
+      {product.imagePath ? (
+        <Image
+          src={product.imagePath}
+          height={150}
+          width={150}
+          className="h-[70px] w-[100px] mt-2 rounded-lg"
+          alt="sofa set image"
+        />
+      ) : (
+        <Loader />
+      )}
+      <div className="flex flex-col items-end space-y-2">
+        <span className="text-gray-700 font-medium">{product.name}</span>
+        <span className="text-gray-600">Rs {product.price}</span>
+        <span className="text-gray-700 font-semibold">
+          Total: Rs {product.quantity > 1 ? product.quantity * product.price : product.price}
+        </span>
+        <button
+          className="px-3 h-10 bg-red-400 text-white rounded-lg hover:bg-red-500 transition duration-300"
+          onClick={() => removeItem(product.id)}
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+))}
                 </div>
       
 

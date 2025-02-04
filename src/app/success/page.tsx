@@ -1,80 +1,168 @@
 
+
+
 "use client"
-import { useState } from 'react';
+import { client } from '@/sanity/lib/client';
+import React, { useEffect, useState } from 'react';
+import jsPDF from 'jspdf';
+import {format ,parseISO} from "date-fns"
+import { useShoppingCart , } from 'use-shopping-cart';
+interface IShipment {
+  shipmentId: string;
+  name: string;
+  phone: string;
+  countryCode: string;
+  shipmentStatus: "pending" | "shipped" | "delivered" | "cancelled";
+  _updatedAt: string;
+  shipDate: string;
+}
 
-export default function Home() {
-  const [trackingNumber, setTrackingNumber] = useState('');
-  const [carrierCode, setCarrierCode] = useState('');
-  const [trackingInfo, setTrackingInfo] = useState(null);
-  const [error, setError] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!trackingNumber  ) {
-      setError('Please enter a tracking number and carrier code.');
-      return;
-    }
-
+const SuccessPage = () => {
+  const [showShippingDetails, setShowShippingDetails] = useState(false);
+  const [shippingDetails, setDetails] = useState<IShipment>();
+const {cartDetails ,clearCart} =useShoppingCart()
+ console.log(cartDetails ,"card details is consoling")
+  async function fetchShipmentDetails() {
     try {
-      const response = await fetch(`/api/tracking`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ trackingNumber, carrierCode })
-      });
-     
-    if(response.ok){
-      alert("tracking id and carrierCode successfully added posted to router")
+      const ShipmentDetails = await client.fetch(
+        `*[_type == "shipment"] {
+          shipmentId, name, phone, countryCode,
+          shipmentStatus, _updatedAt, shipDate
+        }`
+      );
+      return ShipmentDetails;
+    } catch (error) {
+      console.log(error, "Error fetching data");
     }
-      const data =await  response.json()
-      console.log(data ,"response from the spi is fetching here ")
-      setTrackingInfo(data);
+  }
+  const isCartEmpty = cartDetails && Object.keys(cartDetails).length === 0;
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchShipmentDetails();
+      if (data !== undefined  ) setDetails(data[0]);
+    }
+    fetchData();
+  }, []);
 
-    } catch (err) {
-      setError('An error occurred while fetching tracking information.');
-    }
+  const handleDownloadPDF = () => {
+    if (!shippingDetails) return;
+
+    const doc = new jsPDF();
+
+    // Add title
+    doc.setFontSize(18);
+    doc.text("Billing Details", 10, 10);
+
+    // Add shipment details
+    doc.setFontSize(12);
+    let yOffset = 20;
+    const addLine = (label: string, value: string) => {
+      doc.text(`${label}: ${value}`, 10, yOffset);
+      yOffset += 10;
+    };
+
+    addLine("Shipment ID", shippingDetails.shipmentId);
+    addLine("Name", shippingDetails.name);
+    addLine("Phone", shippingDetails.phone);
+    addLine("Country Code", shippingDetails.countryCode);
+    addLine("Shipment Status", shippingDetails.shipmentStatus);
+    addLine("Updated At", shippingDetails._updatedAt);
+    addLine("Ship Date", shippingDetails.shipDate);
+
+    // Save the PDF
+    doc.save(`Billing_Details_${shippingDetails.shipmentId}.pdf`);
   };
 
+  const formatDate = (isoDateString:string) => {
+    const date = parseISO(isoDateString);
+    return format(date, 'MMMM dd, yyyy hh:mm a');
+  };
+
+   if(isCartEmpty){
+    return 
+
+   }
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-    <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-      <h1 className="text-xl font-semibold text-gray-800 text-center mb-4">ShipEngine Tracking</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Tracking Number</label>
-          <input
-            type="text"
-            value={trackingNumber}
-            onChange={(e) => setTrackingNumber(e.target.value)}
-            className="w-full mt-1 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="bg-white p-8 rounded-lg shadow-2xl text-center transform transition-all hover:scale-105">
+        <div className="flex justify-center mb-6">
+          <svg
+            className="w-16 h-16 text-green-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Carrier Code</label>
-          <input
-            type="text"
-            value={carrierCode}
-            onChange={(e) => setCarrierCode(e.target.value)}
-            className="w-full mt-1 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-           
-          />
-        </div>
+        <h3 className="text-3xl font-bold text-gray-800 mb-4">
+          Payment Successful!
+        </h3>
+        <p className="text-lg text-gray-600 mb-6">
+          Thank you for choosing us! We appreciate your trust.
+        </p>
+
+        {/* Button to toggle shipping details */}
         <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mb-6"
+          onClick={() => {setShowShippingDetails(!showShippingDetails)}}
         >
-          Track
+          {showShippingDetails ? 'Hide Shipping Details' : 'View Shipping Details'}
         </button>
-      </form>
-      {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
-      {trackingInfo && (
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow">
-          <h2 className="text-lg font-medium text-gray-800">Tracking Information</h2>
-          <pre className="text-sm text-gray-700 mt-2 overflow-auto">{JSON.stringify(trackingInfo, null, 2)}</pre>
-        </div>
-      )}
+
+        {/* Shipping Details Grid */}
+        {showShippingDetails && !isCartEmpty ? 
+        (
+          <div className="grid grid-cols-2 gap-4 text-left bg-gray-100 p-6 rounded-lg">
+            <div className="font-semibold">Shipment ID:</div>
+            <div>{shippingDetails?.shipmentId}</div>
+
+            <div className="font-semibold">Name Customer:</div>
+            <div>{shippingDetails?.name}</div>
+
+            <div className="font-semibold">Country Code:</div>
+            <div>{shippingDetails?.countryCode}</div>
+
+            <div className="font-semibold">Modified At:</div>
+            <div>{formatDate(shippingDetails?._updatedAt as string)}</div>
+
+            <div className="font-semibold">Shipment Date:</div>
+            <div>{formatDate(shippingDetails?.shipDate as string)}</div>
+
+            <div className="font-semibold">Shipment Status:</div>
+            <div>{shippingDetails?.shipmentStatus}</div>
+
+            {/* Download PDF Button */}
+            <button
+              className="col-span-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors mt-4"
+              onClick={handleDownloadPDF}
+            >
+              Download Billing Details as PDF
+            </button>
+          </div>
+        )
+         : <div>
+          No products are selected
+         </div>
+      }
+
+        {/* Go to Home Button */}
+        <button
+          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors mt-6"
+          onClick={() =>{ (window.location.href = '/') ,clearCart() }}
+        >
+          Go to Home
+        </button>
+      </div>
     </div>
-  </div>
   );
-}
+};
+
+export default SuccessPage;

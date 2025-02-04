@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
 import { FaCalendar, FaTag } from "react-icons/fa6";
-import { BsSearch } from "react-icons/bs";
+ import {format ,parseISO} from "date-fns"
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -46,7 +46,10 @@ const BlogPage = async (slugData:any) => {
 
   const [requiredBlog,blog] = await fetchBlogs();
    
-
+    const formatDate = (isoDateString:string) => {
+       const date = parseISO(isoDateString);
+       return format(date, 'MMMM dd, yyyy hh:mm a');
+     };
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   "></div>
@@ -88,7 +91,7 @@ const BlogPage = async (slugData:any) => {
                   <span className="flex gap-1 items-center">
                     {" "}
                     <FaCalendar />
-                    {blog.date}
+                    {formatDate(blog.date)}
                   </span>
                   <span className="flex gap-1 items-center">
                     {" "}
@@ -143,7 +146,7 @@ const BlogPage = async (slugData:any) => {
                   <span className="flex gap-1 items-center">
                     {" "}
                     <FaCalendar />
-                    {blog.date}
+                    {formatDate(blog.date)}
                   </span>
                    
                 </div>

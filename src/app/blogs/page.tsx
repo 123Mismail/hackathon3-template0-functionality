@@ -10,7 +10,7 @@ import { FaCalendar,FaTag } from "react-icons/fa6";
 import { BsSearch } from "react-icons/bs";
 import { client } from "@/sanity/lib/client";
 import {  urlFor } from '@/sanity/lib/image';
-
+import {format ,parseISO} from "date-fns"
   //  interface 
   export interface ImageAsset {
     _type: 'image';
@@ -45,6 +45,12 @@ const BlogsPage = async() => {
   const blogs = await  fetchBlogs()
   console.log(blogs ,"blogs data is fetching.....")
 
+
+  const formatDate = (isoDateString:string) => {
+     const date = parseISO(isoDateString);
+     return format(date, 'MMMM dd, yyyy hh:mm a');
+   };
+
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
      <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   ">
@@ -68,11 +74,11 @@ const BlogsPage = async() => {
         <div className="flex flex-col gap-10 max-w-[840px] px-10  pb-10 md:pb-0">
           {
             blogs.map((blog:BlogPost)=>(
-              <div className="flex flex-col  gap-4 ">
+              <div className="flex flex-col  gap-4 " key={blog._id}>
               <Image src={urlFor(blog.image).url()} className="rounded-xl w-full  h-[400px] object-cover" height={400} width={400}   alt="blogs image "></Image>
               <div className="flex justify-start items-center gap-6 text-black/50 pt-2"> 
                <span className="flex gap-1 items-center">  <IoPerson/> {blog.author}</span>
-               <span className="flex gap-1 items-center"> <FaCalendar/>{blog.date}</span>
+               <span className="flex gap-1 items-center"> <FaCalendar/>{formatDate(blog.date)}</span>
                <span className="flex gap-1 items-center"> <FaTag/> Wood</span>
               </div>
               <h2 className="text-[38px] font-semibold">{blog.slug.current}</h2>

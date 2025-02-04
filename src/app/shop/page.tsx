@@ -151,41 +151,45 @@ const CartPage = () => {
              <div className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between pl-10 lg:pl-0 gap-4 md:gap-0">
                {/* Display filtered products */}
                {filteredData.map((product: Iproducts) => (
-                 <div className="mt-6  " key={product.id}  >
-                   <Link href={`/shop/${product.id}`}>
-                     <Image
-                       src={product.imagePath}
-                       height={350}
-                       width={350}
-                       alt="blogs laptop images"
-                       className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover overflow-hidden  flex justify-center items-center"
-                     />
-                   </Link>
-                   <div className="flex flex-col gap-6 justify-center items-center text-center">
-                     <p className="text-center pt-3   max-w-[250px] line-clamp-1 -mb-7">
-                       {product.name}
-                     </p>
-                     <p className="text-center  pt-3 max-w-[250px] line-clamp-1 -mb-5">
-                       {product.description}
-                     </p>
-                     <span className="flex gap-4">
-                       <p className="max-w-40 p-2 bg-gray-600  text-white">Rs : {product.price}</p>
-                       <p className="max-w-40 p-2 bg-gray-600  text-white">Stocks : {product.stockLevel}</p>
-                     </span> 
-                     
-                     <button
-                       className="-mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                       onClick={() => {
-                         handleAddToCart(product);
-                          
-                         updateStock(product.id,product.stockLevel -1,"decrease" )
-                       }}
-                     >
-                       Add to Cart
-                     </button>
-                   </div>
-                 </div>
-               ))}
+  <div className="mt-6 flex flex-col items-center justify-center" key={product.id}>
+    <Link href={`/shop/${product.id}`}>
+      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Image
+          src={product.imagePath}
+          height={350}
+          width={350}
+          alt="blogs laptop images"
+          className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
+        />
+      </div>
+    </Link>
+    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
+      <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
+        {product.name}
+      </p>
+      <p className="text-center pt-3 max-w-[250px] line-clamp-1 text-gray-600">
+        {product.description}
+      </p>
+      <span className="flex gap-4 mt-2">
+        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+          Rs : {product.price}
+        </p>
+        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+          Stocks : {product.stockLevel}
+        </p>
+      </span>
+      <button
+        className="mt-2 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-md"
+        onClick={() => {
+          handleAddToCart(product);
+          updateStock(product.id, product.stockLevel - 1, "decrease");
+        }}
+      >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+))}
              </div>
            </div>
          </div>

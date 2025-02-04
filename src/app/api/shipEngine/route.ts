@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { shipEngine } from "@/app/helper/shipEngine"; // Replace with the correct import
+import { client } from "@/sanity/lib/client";
+import { error } from "console";
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,6 +62,36 @@ export async function POST(request: NextRequest) {
     });
 
     console.log("Shipment details:", shipmentDetails);
+    if(shipmentDetails !== undefined ){
+      try {
+           const shipmentDetail = await client.create({
+              _type:'shipment',
+              shipmentId:shipmentDetails.shipmentId,
+              name:shipmentDetails.shipTo?.name,
+              phone:shipmentDetails.shipTo?.phone,
+              countryCode:shipmentDetails.shipTo?.countryCode,
+              postalCode:shipmentDetails.shipTo?.postalCode,
+              shipDate:shipmentDetails.createdAt,
+              createdAt:shipmentDetails.createdAt,
+              modifiedAt:shipmentDetails.modifiedAt,
+              shipmentStatus:shipmentDetails.shipmentStatus,
+           })
+           if(shipmentDetail){
+            return NextResponse.json({message:"data successfully inserted to sanity ",
+                data:shipmentDetail,
+                status:"201"
+            })
+           }else{
+            return NextResponse.json({error:"failed to create shipment detail in sanity  ",
+             
+              status:"401"
+          })
+           }
+      } catch (error) {
+         console.log(error ,"error creating shipping details in sanity ")
+         return NextResponse.json({error :" failed to create shipment in sanity "})
+      }
+    }
 
     return NextResponse.json(shipmentDetails, { status: 200 });
   } catch (error) {

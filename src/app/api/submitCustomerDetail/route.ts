@@ -46,7 +46,7 @@ export async function POST(req: Request) {
         additionalInfo,
       },
     } = body;
-    console.log( email  ,"email is trying t fetch in liine 49")
+    
     // Check if customer already exists with the given email
     const existingCustomer = await client.fetch(
       `*[_type == "customer" && email == $email][0]`,

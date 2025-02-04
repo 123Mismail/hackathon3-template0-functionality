@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const TopPicks = () => {
@@ -24,9 +25,9 @@ const TopPicks = () => {
             <p className="text-center pt-3">
               Going all-in with millennial design
             </p>
-            <button className="underline underline-offset-8   font-medium mx-auto">
+            <Link href={'/shop'}><button className="underline underline-offset-8   font-medium mx-auto">
               Read More
-            </button>
+            </button></Link>
           </div>
         </div>
         <div>
@@ -35,13 +36,13 @@ const TopPicks = () => {
             height={350}
             width={350}
             alt="blogs laptop images"
-            className="w-[230px] h-[250px]   object-contain"
+            className="w-[230px] h-[250px]   object-cover"
           />
           <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
             <p>Going all-in with millennial design</p>
-            <button className="underline underline-offset-8   font-medium mx-auto">
+            <Link href={'/shop'}><button className="underline underline-offset-8   font-medium mx-auto">
               Read More
-            </button>
+            </button></Link>
           </div>
         </div>
         <div>
@@ -54,7 +55,9 @@ const TopPicks = () => {
           />
           <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
             <p>Going all-in with millennial design</p>
-            <button className="underline underline-offset-8 ">Read More</button>
+            <Link href={'/shop'}><button className="underline underline-offset-8   font-medium mx-auto">
+              Read More
+            </button></Link>
           </div>
         </div>
         <div>
@@ -67,14 +70,16 @@ const TopPicks = () => {
           />
           <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
             <p>Going all-in with millennial design</p>
-            <button className="underline underline-offset-8 ">Read More</button>
+            <Link href={'/shop'}><button className="underline underline-offset-8   font-medium mx-auto">
+              Read More
+            </button></Link>
           </div>
         </div>
       </div>
       <div className=" flex justify-center items-center p-6 mt-6">
-        <button className="underline underline-offset-8 mx-auto text-[20px] font-medium">
-          View All
-        </button>
+      <Link href={'/shop'}><button className="underline underline-offset-8   font-medium mx-auto">
+              Read More
+            </button></Link>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Hero1 = () => {
@@ -15,9 +16,9 @@ const Hero1 = () => {
           />
           <span className="  ">
             <h2 className="text-[36px] font-medium">Side table</h2>
-            <button className="underline underline-offset-[12px]">
+           <Link href={'/table'}> <button className="underline underline-offset-[12px]">
               View More
-            </button>
+            </button></Link>
           </span>
         </div>
         <div className="w-full flex flex-col gap-5 justify-start pb-4  py-1   ">
@@ -29,10 +30,10 @@ const Hero1 = () => {
             alt="chairs and tables images"
           />
           <span className=" ">
-            <h2 className="text-[36px] font-medium ">Side table</h2>
-            <button className="underline underline-offset-[12px]">
+            <h2 className="text-[36px] font-medium ">Side Sofa</h2>
+           <Link href={'/sofa'}> <button className="underline underline-offset-[12px]">
               View More
-            </button>
+            </button></Link>
           </span>
         </div>
       </div>
@@ -49,9 +50,9 @@ const Hero1 = () => {
           />
           <span className=" absolute bottom-10 left-14 ">
             <h2 className="text-[36px] font-medium">Side table</h2>
-            <button className="underline underline-offset-[12px]">
+            <Link href={'/table'}> <button className="underline underline-offset-[12px]">
               View More
-            </button>
+            </button></Link>
           </span>
         </div>
         <div className="   w-full flex flex-col justify-start      ">
@@ -63,10 +64,10 @@ const Hero1 = () => {
             alt="chairs and tables images"
           />
           <span className="absolute bottom-10 right-36">
-            <h2 className="text-[36px] font-medium ">Side table</h2>
-            <button className="underline underline-offset-[12px]">
+            <h2 className="text-[36px] font-medium ">Side sofa</h2>
+            <Link href={'/sofa'}> <button className="underline underline-offset-[12px]">
               View More
-            </button>
+            </button></Link>
           </span>
         </div>
       </div>

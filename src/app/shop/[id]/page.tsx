@@ -8,12 +8,14 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { client } from "@/sanity/lib/client";
 import { useShoppingCart } from "use-shopping-cart";
+import { toast } from "react-toastify";
+import ProductDetailSkeleton from "@/app/components/pageLoadingSkeleton";
 
 interface Iproduct {
   imagePath: string;
-  sku:string,
+  sku: string;
   description: string;
-  currency:string,
+  currency: string;
   stockLevel: number;
   price: number;
   category: string;
@@ -23,61 +25,73 @@ interface Iproduct {
 
 const page = ({ params }: { params: any }) => {
   const [productsData, setProductsData] = useState<Iproduct>();
-  const [countProduct , setCountProduct] =useState<number>(1)
-  const {cartDetails , decrementItem , incrementItem , addItem}=useShoppingCart()
-  if(cartDetails && productsData !== undefined ){
-    
-     
-    //  const arrayProduct= Object.values(cartDetails)
-    //      console.log(  arrayProduct[4].id ,"checking id values in line 32")
-    //      console.log (  productsData.id , "trying to check the id value in line 33")
-    //  const requiredProduct = arrayProduct.filter((val)=>  val.id == String(productsData.id))
-    //  console.log(requiredProduct,"products detail in   " )
-     
+  const [categoryProduct, setCategoryProduct] = useState<Iproduct[]>();
+  const [productId, setProductId] = useState("");
+  const { cartDetails, decrementItem, incrementItem, addItem } =
+    useShoppingCart();
+  // const [quantityProduct, setQuantityProduct] = useState(0);
 
-  }
+  // if (cartDetails && productsData !== undefined)
+  //   const arrayProduct = Object.values(cartDetails);
+
   useEffect(() => {
     const fetchDataFromSanity = async () => {
       const { id } = await params;
+      setProductId(String(id));
       const fetchedData =
         await client.fetch(`*[_type=="product" && id=='${id}' ][0]{
                 name,id,imagePath,description,stockLevel,price,category
                
              }`);
-      if(fetchedData!== undefined){
-
+      if (fetchedData !== undefined) {
         setProductsData(fetchedData);
       }
-      
     };
     fetchDataFromSanity();
   }, []);
-  
-  // handel increment item into card 
-  
-  const handelCardDataCountIncrement= ()=>{
-    setCountProduct( (countProduct)=> countProduct + 1)
-    if(productsData!==undefined)
-    addItem(productsData);
-  }
-  const handelCardDataCountDecrement= ()=>{
-    if(countProduct>1){
 
-      setCountProduct( (countProduct)=> countProduct - 1)
-    }else{
-      setCountProduct( (countProduct)=> countProduct)
-    }
-    if(productsData!==undefined)
-      decrementItem(String(productsData.id));
-  }
+  useEffect(() => {
+    const handelFetchDataByCategory = async () => {
+      if (productsData !== undefined) {
+        const fetchedDataCategory =
+          await client.fetch(`*[_type=="product" && category=='${productsData?.category}']{
+              name,id,imagePath,description,stockLevel,price,category
+             
+         }`);
 
-  console.log(productsData, "trying to fetch mathed data from sanity");
+        if (
+          fetchedDataCategory.length > 0 &&
+          fetchedDataCategory !== undefined
+        ) {
+          setCategoryProduct(fetchedDataCategory);
+        }
+      }
+    };
+    handelFetchDataByCategory();
+  }, [productsData]);
+
   if (!productsData) {
-    return <div className="min-h-screen  w-full text-center mx-auto flex justify-center items-center">
-      <p>Loading...</p>
-    </div>
-    ; // Render a loading state or appropriate message
+    return <ProductDetailSkeleton />; // Render a loading state or appropriate message
   }
+
+  // toast
+  const notifySuccess = () =>
+    toast.success("Product Added to card successfully!", {
+      position: "top-right",
+      autoClose: 2000, // Close after 2 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  //     console.log("First Item ID:", Object.values(cartDetails)[0]?.id);
+  // console.log("Product ID:", productId);
+  // console.log("Comparison Result:", Object.values(cartDetails)[0]?.id == productId);
+
+  // console.log(quantityProduct, "product data which matching id inline 118");
+  console.log(productId, "product id is trying to fetch here in line 106");
   return (
     <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden px-3   lg:pl-0 ">
       <div className="w-full h-[100px] flex  justify-start px-10 items-center ">
@@ -102,8 +116,8 @@ const page = ({ params }: { params: any }) => {
               <Image
                 src={productsData?.imagePath}
                 className="object-cover rotate-[180deg]"
-                height={250}
-                width={250}
+                height={220}
+                width={220}
                 alt="product imges"
               ></Image>
             </div>
@@ -111,8 +125,8 @@ const page = ({ params }: { params: any }) => {
               <Image
                 src={productsData?.imagePath}
                 className="object-cover rotate-[90deg]"
-                height={250}
-                width={250}
+                height={220}
+                width={220}
                 alt="product imges"
               ></Image>
             </div>
@@ -120,8 +134,8 @@ const page = ({ params }: { params: any }) => {
               <Image
                 src={productsData?.imagePath}
                 className="object-cover rotate-[360deg]"
-                height={250}
-                width={250}
+                height={220}
+                width={220}
                 alt="product imges"
               ></Image>
             </div>
@@ -137,12 +151,12 @@ const page = ({ params }: { params: any }) => {
           </div>
           {}
           <div className="lg:w-4/5 mx-auto flex flex-wrap ">
-
             <Image
               height={400}
               width={400}
               alt="ecommerce"
-              className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded"
+              className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded "
+              priority
               src={productsData?.imagePath}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -215,7 +229,7 @@ const page = ({ params }: { params: any }) => {
                 </span>
               </div>
               <p className="leading-relaxed text-[13px] font-normal  ">
-               {productsData?.description}
+                {productsData?.description}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
@@ -238,17 +252,41 @@ const page = ({ params }: { params: any }) => {
               </div>
               <div className="flex justify-start items-center gap-4">
                 <span className=" h-10 w-24 border border-1 border-[#9F9F9F] p-8 rounded-[15px] flex justify-center items-center gap-4 px-5 py-6 ">
-                  <span className="cursor-pointer"
-                    onClick={()=>handelCardDataCountDecrement()}
-                   >-</span>
-                  <span>{countProduct}</span>
                   <span
-                   className="cursor-pointer"
-                   onClick={()=>handelCardDataCountIncrement()}
-                  >+</span>
+                    className="cursor-pointer"
+                    onClick={() => decrementItem(productId)}
+                  >
+                    -
+                  </span>
+
+                  {cartDetails &&
+                  Object.values(cartDetails).length > 0 &&
+                  Object.values(cartDetails).some(
+                    (item) => String(item.id) === productId
+                  ) ? (
+                    <span>
+                      {
+                        Object.values(cartDetails).find(
+                          (item) => String(item.id) === productId
+                        )?.quantity
+                      }
+                    </span>
+                  ) : (
+                    <span>0</span>
+                  )}
+
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => incrementItem(productId)}
+                  >
+                    +
+                  </span>
                 </span>
-                <button className="px-12 py-4   border-2 rounded-[15px]"
-                onClick={()=>addItem(productsData)}
+                <button
+                  className="px-12 py-4   border-2 rounded-[15px]"
+                  onClick={() => {
+                    addItem(productsData), notifySuccess();
+                  }}
                 >
                   Add To Cart
                 </button>
@@ -262,7 +300,7 @@ const page = ({ params }: { params: any }) => {
                 </span>
                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-2">
                   {" "}
-                  <h3>Category</h3> <span>: {productsData.category}</span>  
+                  <h3>Category</h3> <span>: {productsData.category}</span>
                 </span>
                 <span className="text-[16px] text-[#9F9F9F] flex  justify-start gap-10">
                   {" "}
@@ -331,73 +369,49 @@ const page = ({ params }: { params: any }) => {
 
       {/* related  */}
 
-      <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
+      <div className="max-w-[1440px] mx-auto relative overflow-hidden   px-4 py-14 ">
         <div className=" flex flex-col justify-center items-center gap-14 pb-8 ">
           <h2 className="text-[36px] font-medium">Related Products</h2>
         </div>
-        <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0   gap-4 md:gap-0  ">
-          <div>
-            <Image
-              src={"/images/shop2.png"}
-              height={350}
-              width={350}
-              alt="blogs laptop images"
-              className="w-[230px] h-[250px]   object-contain"
-            />
-            <div className="flex flex-col gap-6 justify-center items-center text-center">
-              <p className="text-center pt-3">
-                Going all-in with millennial design
-              </p>
-              <button className="underline underline-offset-8   font-medium mx-auto">
-                Read More
-              </button>
-            </div>
-          </div>
-          <div>
-            <Image
-              src={"/images/shop3.png"}
-              className="w-[230px] h-[250px] object-cover  object-bottom "
-              height={350}
-              width={350}
-              alt="blogs laptop images"
-            />
-            <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
-              <p>Going all-in with millennial design</p>
-              <button className="underline underline-offset-8   font-medium mx-auto">
-                Read More
-              </button>
-            </div>
-          </div>
-          <div>
-            <Image
-              src={"/images/shop4.png"}
-              className="w-[230px] h-[250px]   object-contain"
-              height={350}
-              width={350}
-              alt="blogs laptop images"
-            />
-            <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
-              <p>Going all-in with millennial design</p>
-              <button className="underline underline-offset-8 ">
-                Read More
-              </button>
-            </div>
-          </div>
-          <div>
-            <Image
-              src={"/images/shop5.png"}
-              className="w-[230px] h-[250px]   object-contain object-center"
-              height={350}
-              width={350}
-              alt="blogs laptop images"
-            />
-            <div className="flex flex-col  gap-6 justify-center items-center text-center pt-3">
-              <p>Going all-in with millennial design</p>
-              <button className="underline underline-offset-8 ">
-                Read More
-              </button>
-            </div>
-          </div>
+        <div className="max-w-[1240px] mx-auto    overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0    md:gap-0  ">
+          {/* related products */}
+
+          {categoryProduct &&
+            categoryProduct.slice(0, 4).map((categoryProduct: any) => (
+              <div key={productsData.id} className="mx-3">
+                {categoryProduct.imagePath ? (
+                  <Image
+                    src={categoryProduct.imagePath}
+                    height={350}
+                    width={350}
+                    alt="blogs laptop images"
+                    className="w-[230px] h-[250px] py-5  object-cover hover:scale-110 duration-300"
+                  />
+                ) : (
+                  <p>Loading ...</p>
+                )}
+
+                <div className="flex flex-col gap-6 justify-center items-center text-center">
+                  <p className="text-center pt-3">{categoryProduct.name}</p>
+                  <Link
+                    href={`/${categoryProduct.category.toLocaleLowerCase()}`}
+                  >
+                    {" "}
+                    <button className="underline underline-offset-8   font-medium mx-auto">
+                      Show More
+                    </button>
+                  </Link>
+                  <button
+                    className="px-10 py-3 bg-blue-700 text-white hover:bg-blue-600   scale-110 duration-200"
+                    onClick={() => {
+                      addItem(categoryProduct.id), notifySuccess();
+                    }}
+                  >
+                    Add to card
+                  </button>
+                </div>
+              </div>
+            ))}
         </div>
         <div className=" flex justify-center items-center p-6 mt-6">
           <Link href={"/shop"}>

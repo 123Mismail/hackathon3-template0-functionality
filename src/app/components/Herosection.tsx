@@ -1,36 +1,33 @@
 import Image from "next/image";
- 
+import Link from "next/link";
 
 const Herosection = () => {
   return (
     <>
-      <div className="max-w-[1440px] mx-auto bg-[#FBEBB5] overflow-hidden relative  py-10  px-10 mb-10">
+      <div className="max-w-[1440px] mx-auto bg-[#FBEBB5] overflow-hidden relative py-10 px-10 mb-10">
         <div className="flex flex-wrap justify-center gap-[-20px] items-center w-full">
           {/* content */}
-          <div className=" text-[#000000]  pl-10 lg:pl-0">
+          <div className="text-[#000000] pl-10 lg:pl-0">
             <h2 className="text-[64px] text-center md:text-left font-medium md:font-semibold">
               Rocket single <br /> seater
             </h2>
 
-            <button className="underline underline-offset-4 pt-8 mx-auto">
+          <Link  href={'/chairs'}>  <button className="underline underline-offset-4 pt-8 mx-auto">
               Shop Now
-            </button>
+            </button></Link>
           </div>
           {/* image */}
-          <div>
+          <div className="transform scale-x-[-1]"> {/* Flip the image horizontally */}
             <Image
               src={"/images/mainchair.png"}
               height={500}
               width={500}
-              className="max-w-[853px] w-full  "
-
+              className="max-w-[853px] w-full"
               alt="seat image"
-            ></Image>
+            />
           </div>
         </div>
       </div>
-    
-
     </>
   );
 };

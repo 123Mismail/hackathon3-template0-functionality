@@ -9,8 +9,9 @@ import "./globals.css";
 import NavbarHeader from "./components/NavbarHeader";
 import FooterComponent from "./components/FooterComponent";
 import CartProviderWrapper from "@/components/cardProviderWrapper";
-import { ToastContainer } from "react-toastify";
+ 
 import ClerkWrapper from "./components/Provider";
+import ToastProvider from "@/components/toastProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,23 +38,23 @@ export default function RootLayout({
 
 
 
-      <ClerkWrapper>
     <html lang="en">
 
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >  
+        >  
+        <ClerkWrapper>
          <CartProviderWrapper> 
           
           <NavbarHeader />
-          <ToastContainer />
+          <ToastProvider />
           {children}
           <FooterComponent />
           </CartProviderWrapper>
           
+          </ClerkWrapper>
       </body>
     </html>
-          </ClerkWrapper>
   );
 }

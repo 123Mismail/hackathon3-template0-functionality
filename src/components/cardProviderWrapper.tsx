@@ -4,7 +4,7 @@
 import { CartProvider } from "use-shopping-cart";
 import React from "react";
  const stripeKey =process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
- console.log(stripeKey ,"trying to fetch stripe keys ")
+ 
 export default function CartProviderWrapper({
   children,
 }: {

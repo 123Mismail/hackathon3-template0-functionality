@@ -1,6 +1,6 @@
  "use client"
 import { ClerkProvider } from "@clerk/nextjs";
-import React from "react";
+ 
 
 interface ClerkWrapperProps {
   children: React.ReactNode;

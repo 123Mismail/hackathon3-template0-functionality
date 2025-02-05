@@ -6,9 +6,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Ignore all ESLint errors during builds
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@clerk/nextjs'],
-  },
+   
 };
 
 export default nextConfig;

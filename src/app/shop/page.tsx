@@ -131,7 +131,7 @@ const CartPage = () => {
     }
   };
 
-  if (fetchedData == undefined) {
+  if (!fetchedData ) {
     return (
       <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
     );

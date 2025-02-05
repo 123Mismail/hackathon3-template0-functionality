@@ -64,9 +64,10 @@ const CartPage = () => {
       draggable: true,
       progress: undefined,
     });
-     if(!fetchedData){
-      return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
-     }
+    if (!fetchedData || fetchedData.length === 0) {
+        return <p className="w-full h-1/3 text-center p-28">Data not found ....</p>;
+    }
+    
      
        
   return (

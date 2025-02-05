@@ -22,7 +22,7 @@ interface Iproducts{
 
 const CartPage = () => {
 
-  const { addItem ,cartDetails,totalPrice} = useShoppingCart();
+  const { addItem ,cartDetails} = useShoppingCart();
   const [fetchedData, setFetchedData] = useState<Iproducts[]>();
 // fetching data 
 
@@ -32,7 +32,7 @@ useEffect(()=>{
       const fetchedData =await  client.fetch(`*[_type == "product"  && category=="Sofa"]{
   name,price,id,description,imagePath,category,stockLevel
 }`)
-        console.log(fetchedData ,"trying to display fetched data from sanity ")
+         
         setFetchedData(fetchedData)
      }
     

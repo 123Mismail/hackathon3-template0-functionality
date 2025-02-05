@@ -21,9 +21,10 @@ const CartPage = () => {
   const { cartDetails, totalPrice, removeItem } = useShoppingCart();
   const detailArray = Object.values(cartDetails!);
 
-  if(detailArray == undefined){
-    return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
-   }
+  if (!detailArray || detailArray.length === 0) {
+    return <p className="w-full h-1/3 text-center p-28">Data not found ....</p>;
+}
+
 
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">

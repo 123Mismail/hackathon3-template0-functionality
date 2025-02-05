@@ -22,18 +22,24 @@ interface Iproducts{
 
 const CartPage = () => {
 
-  const { addItem ,cartDetails,totalPrice} = useShoppingCart();
+  const { addItem ,cartDetails} = useShoppingCart();
   const [fetchedData, setFetchedData] = useState<Iproducts[]>();
 // fetching data 
 
 useEffect(()=>{
      const  fetchDataFromSannity=async()=>{
          
-      const fetchedData =await  client.fetch(`*[_type == "product" && category=="Bed"]{
-  name,price,id,description,imagePath,category,stockLevel
-}`)
-        console.log(fetchedData ,"trying to display fetched data from sanity ")
-        setFetchedData(fetchedData)
+   try {
+       const fetchedData =await  client.fetch(`*[_type == "product" && category=="Bed"]{
+   name,price,id,description,imagePath,category,stockLevel
+ }`)
+
+ console.log(fetchedData ,"trying to display fetched data from sanity ")
+ setFetchedData(fetchedData)
+
+   } catch (error) {
+     console.log(error ,"Errors while fetchif data from sanity ")
+   }
      }
     
      fetchDataFromSannity();
@@ -49,7 +55,7 @@ useEffect(()=>{
     currency: "USD"
   }
   addItem(itemsToAdd)
-  const totalItems = cartDetails ? Object.values(cartDetails).reduce((total, item) => total + item.quantity, 0) : 0;
+   
    
  }
     

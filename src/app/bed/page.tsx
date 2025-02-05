@@ -50,9 +50,7 @@ useEffect(()=>{
   }
   addItem(itemsToAdd)
   const totalItems = cartDetails ? Object.values(cartDetails).reduce((total, item) => total + item.quantity, 0) : 0;
-  console.log(cartDetails,"card detail is consoling ")
-  console.log(totalPrice,"total price of products is dispaying  ")
-  console.log(totalItems,"total no of items in card")
+   
  }
     
 // toast 
@@ -66,6 +64,10 @@ const notifySuccess = () =>
     draggable: true,
     progress: undefined,
   });
+
+  if(fetchedData == undefined){
+    return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+   }
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px]  overflow-hidden   ">

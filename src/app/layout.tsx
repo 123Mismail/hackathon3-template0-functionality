@@ -37,13 +37,13 @@ export default function RootLayout({
 
 
 
+      <ClerkWrapper>
     <html lang="en">
 
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >  
-       <ClerkWrapper>
          <CartProviderWrapper> 
           
           <NavbarHeader />
@@ -52,8 +52,8 @@ export default function RootLayout({
           <FooterComponent />
           </CartProviderWrapper>
           
-          </ClerkWrapper>
       </body>
     </html>
+          </ClerkWrapper>
   );
 }

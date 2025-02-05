@@ -86,12 +86,11 @@ const page = ({ params }: { params: any }) => {
       progress: undefined,
     });
 
-  //     console.log("First Item ID:", Object.values(cartDetails)[0]?.id);
-  // console.log("Product ID:", productId);
-  // console.log("Comparison Result:", Object.values(cartDetails)[0]?.id == productId);
+      
+    if(productsData == undefined){
+      return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+     }
 
-  // console.log(quantityProduct, "product data which matching id inline 118");
-  console.log(productId, "product id is trying to fetch here in line 106");
   return (
     <div className="w-full md:max-w-[1440px]  mx-auto   overflow-hidden px-3   lg:pl-0 ">
       <div className="w-full h-[100px] flex  justify-start px-10 items-center ">

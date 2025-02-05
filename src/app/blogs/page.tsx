@@ -51,6 +51,10 @@ const BlogsPage = async() => {
      return format(date, 'MMMM dd, yyyy hh:mm a');
    };
 
+   if(blogs == undefined){
+    return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+   }
+
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
      <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   ">

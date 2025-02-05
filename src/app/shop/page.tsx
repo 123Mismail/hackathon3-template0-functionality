@@ -12,7 +12,7 @@ import ProductSkeleton from "../components/productsSkeleton";
 interface Iproducts {
   description: string;
   id: number;
-  _id:string,
+  _id: string;
   imagePath: string;
   stockLevel: number;
   quantity?: number;
@@ -23,14 +23,10 @@ interface Iproducts {
 }
 
 const CartPage = () => {
-  const { addItem, cartDetails, totalPrice, cartCount  } = useShoppingCart();
+  const { addItem } = useShoppingCart();
   const [fetchedData, setFetchedData] = useState<Iproducts[]>([]);
   const [filteredData, setFilteredData] = useState<Iproducts[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-
-  console.log("Cart Details:", cartDetails);
-  console.log("Total Price:", totalPrice);
-  console.log("Cart Count:", cartCount);
 
   const notifySuccess = () =>
     toast.success("Product Added to cart successfully!", {
@@ -46,35 +42,59 @@ const CartPage = () => {
   // Fetch data from Sanity
   useEffect(() => {
     const fetchDataFromSanity = async () => {
-      const fetchedData = await client.fetch(`*[_type=="product"]{
-        name, id,_id, imagePath, description, stockLevel, price, category
-      }`);
-      setFetchedData(fetchedData);
-      setFilteredData(fetchedData); // Initialize filtered data with all products
-    };
+      try {
+        // Fetch data from Sanity
+        const fetchedData = await client.fetch(`*[_type=="product"]{
+          name, id, _id, imagePath, description, stockLevel, price, category
+        }`);
+  
+        // Filter data based on searchQuery
+        
+        if (searchQuery) {
+        let   filtered = fetchedData.filter((product: Iproducts) =>
+            product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.name.toLowerCase().includes(searchQuery.toLowerCase())
 
+             
+            
+          );
+
+          setFetchedData(filtered);
+        }else{
+          setFetchedData(fetchedData);
+
+        }
+          
+        // Update state with filtered data
+      } catch (error) {
+        console.error("Error fetching data from Sanity:", error);
+      }
+    };
+  
+    // Fetch data when the component mounts or searchQuery changes
     fetchDataFromSanity();
-  }, [fetchedData]);
+  }, [searchQuery ]); // Only depend on searchQuery
 
   // Handle search by category
-  useEffect(() => {
-    if (searchQuery) {
-      const filtered = fetchedData.filter((product) =>
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredData(filtered);
-    } else {
-      // Only set filteredData to fetchedData if they are not already the same
-      if (filteredData.length !== fetchedData.length) {
-        setFilteredData(fetchedData);
-      }
-    }
-  }, [searchQuery, fetchedData , ]);
+  // useEffect(() => {
+  //   if (searchQuery) {
+  //     const filtered = fetchedData.filter((product) =>
+  //       product.category.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
+  //     setFilteredData(filtered);
+
+  //   } else {
+  //     // Only set filteredData to fetchedData if they are not already the same
+  //     if (filteredData.length !== fetchedData.length) {
+  //       setFilteredData(fetchedData);
+  //     }
+  //   }
+  // }, [searchQuery]);
   // Handle add to cart
   const handleAddToCart = (product: Iproducts) => {
     const itemsToAdd = {
-      sku: String(product.id), 
-      _id:product._id,
+      sku: String(product.id),
+      _id: product._id,
       name: product.name,
       price: product.price,
       quantity: 1,
@@ -84,11 +104,13 @@ const CartPage = () => {
     };
     addItem(itemsToAdd);
     notifySuccess();
-    
   };
 
- 
-  const updateStock = async (productId:number, quantity:number, action:string) => {
+  const updateStock = async (
+    productId: number,
+    quantity: number,
+    action: string
+  ) => {
     try {
       const response = await fetch("/api/stockHandel", {
         method: "POST",
@@ -97,18 +119,24 @@ const CartPage = () => {
         },
         body: JSON.stringify({ productId, quantity, action }),
       });
-  
+
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error || "Failed to update stock");
       }
-  
+
       console.log("Stock updated:", data.updatedProduct);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error:", error.message);
     }
   };
-  
+
+  if (fetchedData == undefined) {
+    return (
+      <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+    );
+  }
+
   return (
     <div className="w-full md:max-w-[1440px] mx-auto overflow-hidden lg:pl-0">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden"></div>
@@ -139,74 +167,86 @@ const CartPage = () => {
         />
       </div>
 
+      {fetchedData.length == 0 ? (
+        <ProductSkeleton />
+      ) : (
+        <div className="max-w-[1440px] flex flex-wrap justify-center items-center gap-6 py-3">
+          <div className="w-full h-[100px] flex flex-wrap px-3 md:px-0 justify-around items-center">
+            {/* Filter and sorting UI (unchanged) */}
+          </div>
 
-      { fetchedData.length ==0 ? <ProductSkeleton/> :
-         <div className="max-w-[1440px] flex flex-wrap justify-center items-center gap-6 py-3">
-         <div className="w-full h-[100px] flex flex-wrap px-3 md:px-0 justify-around items-center">
-           {/* Filter and sorting UI (unchanged) */}
-         </div>
- 
-         <div className="w-full bg-white">
-           <div className="max-w-[1240px] mx-auto relative overflow-hidden py-10">
-             <div className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between pl-10 lg:pl-0 gap-4 md:gap-0">
-               {/* Display filtered products */}
-               {filteredData.map((product: Iproducts) => (
-  <div className="mt-6 flex flex-col items-center justify-center" key={product.id}>
-    <Link href={`/shop/${product.id}`}>
-      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <Image
-          src={product.imagePath}
-          height={350}
-          width={350}
-          alt="blogs laptop images"
-          className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
-        />
-      </div>
-    </Link>
-    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
-      <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
-        {product.name}
-      </p>
-      <p className="text-center pt-3 max-w-[250px] line-clamp-1 text-gray-600">
-        {product.description}
-      </p>
-      <span className="flex gap-4 mt-2">
-        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
-          Rs : {product.price}
-        </p>
-        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
-          Stocks : {product.stockLevel}
-        </p>
-      </span>
-      <button
-        className="mt-2 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-md"
-        onClick={() => {
-          handleAddToCart(product);
-          updateStock(product.id, product.stockLevel - 1, "decrease");
-        }}
-      >
-        Add to Cart
-      </button>
-    </div>
-  </div>
-))}
-             </div>
-           </div>
-         </div>
- 
-         {/* Pagination (unchanged) */}
-         <div className="flex justify-center items-center gap-6">
-           <span className="h-7 w-7 bg-[#FBEBB5] flex justify-center items-center">1</span>
-           <span className="h-7 w-7 bg-[#FBEBB5]/60 flex justify-center items-center">2</span>
-           <span className="h-7 w-7 bg-[#FBEBB5]/60 flex justify-center items-center">3</span>
-           <span className="h-7 w-12 bg-[#FBEBB5]/60 flex justify-center items-center px-4 py-1">
-             Next
-           </span>
-         </div>
-       </div>
-      }
+          <div className="w-full bg-white">
+            <div className="max-w-[1240px] mx-auto relative overflow-hidden py-10">
+              <div className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between pl-10 lg:pl-0 gap-4 md:gap-0">
+                {/* Display filtered products */}
+                {fetchedData.map((product: Iproducts) => (
+                  <div
+                    className="mt-6 flex flex-col items-center justify-center"
+                    key={product.id}
+                  >
+                    <Link href={`/shop/${product.id}`}>
+                      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <Image
+                          src={product.imagePath}
+                          height={350}
+                          width={350}
+                          alt="blogs laptop images"
+                          className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
+                        />
+                      </div>
+                    </Link>
+                    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
+                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
+                        {product.name}
+                      </p>
+                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 text-gray-600">
+                        {product.description}
+                      </p>
+                      <span className="flex gap-4 mt-2">
+                        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                          Rs : {product.price}
+                        </p>
+                        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                          Stocks : {product.stockLevel}
+                        </p>
+                      </span>
+                      <button
+                        className="mt-2 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-md"
+                        onClick={() => {
+                          handleAddToCart(product);
+                          updateStock(
+                            product.id,
+                            product.stockLevel - 1,
+                            "decrease"
+                          );
+                        }}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-     
+          {/* Pagination (unchanged) */}
+          <div className="flex justify-center items-center gap-6">
+            <span className="h-7 w-7 bg-[#FBEBB5] flex justify-center items-center">
+              1
+            </span>
+            <span className="h-7 w-7 bg-[#FBEBB5]/60 flex justify-center items-center">
+              2
+            </span>
+            <span className="h-7 w-7 bg-[#FBEBB5]/60 flex justify-center items-center">
+              3
+            </span>
+            <span className="h-7 w-12 bg-[#FBEBB5]/60 flex justify-center items-center px-4 py-1">
+              Next
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Services (unchanged) */}
       <div className="w-full bg-[#FAF4F4] flex flex-wrap justify-center items-center p-10">

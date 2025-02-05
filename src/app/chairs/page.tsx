@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useShoppingCart } from "use-shopping-cart";
+import ProductSkeleton from "../components/productsSkeleton";
 
 interface Iproducts {
   description: string;
@@ -48,18 +49,12 @@ const CartPage = () => {
       currency: "USD",
     };
     addItem(itemsToAdd);
-    const totalItems = cartDetails
-      ? Object.values(cartDetails).reduce(
-          (total, item) => total + item.quantity,
-          0
-        )
-      : 0;
-    console.log(cartDetails, "card detail is consoling ");
-    console.log(totalPrice, "total price of products is dispaying  ");
-    console.log(totalItems, "total no of items in card");
+   
+    
   };
 
-//   toast  const notifySuccess = () =>
+//   toast n
+ const notifySuccess = () =>
     toast.success("Product Added to card successfully!", {
       position: "top-right",
       autoClose: 2000, // Close after 2 seconds
@@ -69,7 +64,11 @@ const CartPage = () => {
       draggable: true,
       progress: undefined,
     });
-
+     if(!fetchedData){
+      return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+     }
+     
+       
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px]  overflow-hidden   "></div>
@@ -148,7 +147,8 @@ const CartPage = () => {
           <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
             <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0   gap-4 md:gap-0  ">
               {/* main div  */}
-              {fetchedData ?
+              {fetchedData.length ==0 ? <ProductSkeleton/>
+               :
                 fetchedData.map((product: Iproducts) => (
                   <div className="mt-6" key={product.id}>
                     <Link href={`/shop/${product.id}`}>
@@ -180,9 +180,7 @@ const CartPage = () => {
                       </button>
                     </div>
                   </div>
-                )):<div className="tex-center w-full h-[400px] flex justify-center items-center ">
-                Loading papge .....
-              </div>
+                )) 
               }
             </div>
           </div>

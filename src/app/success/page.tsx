@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import {format ,parseISO} from "date-fns"
 import { useShoppingCart , } from 'use-shopping-cart';
+ 
 interface IShipment {
   shipmentId: string;
   name: string;
@@ -21,7 +22,9 @@ const SuccessPage = () => {
   const [showShippingDetails, setShowShippingDetails] = useState(false);
   const [shippingDetails, setDetails] = useState<IShipment>();
 const {cartDetails ,clearCart} =useShoppingCart()
- console.log(cartDetails ,"card details is consoling")
+
+ 
+  
   async function fetchShipmentDetails() {
     try {
       const ShipmentDetails = await client.fetch(
@@ -78,7 +81,10 @@ const {cartDetails ,clearCart} =useShoppingCart()
     return format(date, 'MMMM dd, yyyy hh:mm a');
   };
 
-    
+
+    // if(isCartEmpty){
+    //   return router.push('/shop')
+    // }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
@@ -115,7 +121,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
         </button>
 
         {/* Shipping Details Grid */}
-        {showShippingDetails && !isCartEmpty &&
+        {showShippingDetails &&  
         (
           <div className="grid grid-cols-2 gap-4 text-left bg-gray-100 p-4 py-6 rounded-lg">
             <div className="font-semibold">Shipment ID:</div>

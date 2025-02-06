@@ -78,15 +78,12 @@ const {cartDetails ,clearCart} =useShoppingCart()
     return format(date, 'MMMM dd, yyyy hh:mm a');
   };
 
-   if(isCartEmpty){
-    return 
-
-   }
+    
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
-      <div className="bg-white p-8 rounded-lg shadow-2xl text-center transform transition-all hover:scale-105">
-        <div className="flex justify-center mb-6">
+      <div className="bg-white p-8 rounded-lg py-4 shadow-2xl text-center transform transition-all hover:scale-100">
+        <div className="flex justify-center mb-4">
           <svg
             className="w-16 h-16 text-green-500"
             fill="none"
@@ -102,7 +99,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
             ></path>
           </svg>
         </div>
-        <h3 className="text-3xl font-bold text-gray-800 mb-4">
+        <h3 className="text-3xl font-bold text-gray-800 mb-3">
           Payment Successful!
         </h3>
         <p className="text-lg text-gray-600 mb-6">
@@ -118,9 +115,9 @@ const {cartDetails ,clearCart} =useShoppingCart()
         </button>
 
         {/* Shipping Details Grid */}
-        {showShippingDetails && !isCartEmpty ? 
+        {showShippingDetails && !isCartEmpty &&
         (
-          <div className="grid grid-cols-2 gap-4 text-left bg-gray-100 p-6 rounded-lg">
+          <div className="grid grid-cols-2 gap-4 text-left bg-gray-100 p-4 py-6 rounded-lg">
             <div className="font-semibold">Shipment ID:</div>
             <div>{shippingDetails?.shipmentId}</div>
 
@@ -148,9 +145,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
             </button>
           </div>
         )
-         : <div>
-          No products are selected
-         </div>
+         
       }
 
         {/* Go to Home Button */}

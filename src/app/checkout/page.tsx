@@ -731,8 +731,10 @@ type FormValues = z.infer<typeof schema>;
 
 const CheckoutPage = () => {
   const { cartDetails, totalPrice } = useShoppingCart<any>();
+  const [showErrors , setErrors] =useState('')
   const [loading, setLoading] = useState(false);
   const items: any = Object.values(cartDetails || {});
+
   const arrayProductData = items;
 
   const {
@@ -765,6 +767,7 @@ const CheckoutPage = () => {
     try {
       // Validate items array
       if (!arrayProductData || arrayProductData.length === 0) {
+        setLoading(false)
         throw new Error("No items in the cart.");
       }
 
@@ -832,7 +835,9 @@ const CheckoutPage = () => {
     try {
       // Validate items array
       if (!arrayProductData || arrayProductData.length === 0) {
+        alert("ther is no item in the card")
         throw new Error("No items in the cart.");
+       
       }
 
       // Call the API route to submit customer details
@@ -989,13 +994,18 @@ const CheckoutPage = () => {
                   <br />
                 </div>
               </div>
-              <button
+              {arrayProductData.length > 0 ?
+                <button
                 type="submit"
                 disabled={!isValid || loading}
                 className="px-10 py-2 rounded-2xl border border-1 mx-auto text-center mt-4 w-full"
               >
+              
                 {loading ? "Processing..." : "Proceed to Payment"}
-              </button>
+              </button> :
+              <button  disabled className="px-7 py-2 mt-2 bg-red-400 text-white rounded-xl">Your Card is Empty </button>  
+            }
+              
             </form>
           </div>
 

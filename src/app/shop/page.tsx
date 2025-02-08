@@ -16,6 +16,8 @@ interface Iproducts {
   imagePath: string;
   stockLevel: number;
   quantity?: number;
+  discountPercentage?:number;
+  isFeaturedProduct:boolean;
   price: number;
   category: string;
   sku: number;
@@ -45,7 +47,7 @@ const CartPage = () => {
       try {
         // Fetch data from Sanity
         const fetchedData = await client.fetch(`*[_type=="product"]{
-          name, id, _id, imagePath, description, stockLevel, price, category
+          name, id, _id, imagePath, description, stockLevel, price, category,discountPercentage,isFeaturedProduct
         }`);
   
         // Filter data based on searchQuery
@@ -75,28 +77,13 @@ const CartPage = () => {
     fetchDataFromSanity();
   }, [searchQuery ]); // Only depend on searchQuery
 
-  // Handle search by category
-  // useEffect(() => {
-  //   if (searchQuery) {
-  //     const filtered = fetchedData.filter((product) =>
-  //       product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  //     );
-  //     setFilteredData(filtered);
-
-  //   } else {
-  //     // Only set filteredData to fetchedData if they are not already the same
-  //     if (filteredData.length !== fetchedData.length) {
-  //       setFilteredData(fetchedData);
-  //     }
-  //   }
-  // }, [searchQuery]);
-  // Handle add to cart
+ 
   const handleAddToCart = (product: Iproducts) => {
     const itemsToAdd = {
       sku: String(product.id),
       _id: product._id,
       name: product.name,
-      price: product.price,
+      price: product.price - (product.price * (product!.discountPercentage! / 100)),
       quantity: 1,
       stocksLevel: product.stockLevel,
       imagePath: product.imagePath,
@@ -185,7 +172,7 @@ const CartPage = () => {
                     key={product.id}
                   >
                     <Link href={`/shop/${product.id}`}>
-                      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 relative">
                         <Image
                           src={product.imagePath}
                           height={350}
@@ -193,6 +180,7 @@ const CartPage = () => {
                           alt="blogs laptop images"
                           className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
                         />
+                        <span className="absolute top-0 bg-[#FBEBB5]">{product.discountPercentage}%OFF</span>
                       </div>
                     </Link>
                     <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
@@ -202,16 +190,18 @@ const CartPage = () => {
                       <p className="text-center pt-3 max-w-[250px] line-clamp-1 text-gray-600">
                         {product.description}
                       </p>
-                      <span className="flex gap-4 mt-2">
-                        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
-                          Rs : {product.price}
+                      <span className=" flex flex-col w-full gap-2 mt-2">
+                        <p className="  w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                          Rs : {product.price - (product.price * (product.discountPercentage! / 100))}
+
+                          <span className="ml-7 line-through">RS:{product.price}</span>
                         </p>
-                        <p className="max-w-40 p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                        <p className=" w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
                           Stocks : {product.stockLevel}
                         </p>
                       </span>
                       <button
-                        className="mt-2 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-md"
+                        className="mt-2 px-6 py-2 w-full bg-[#FBEBB5] text-black rounded-lg hover:bg-[#ecdfb4] transition-colors duration-300 shadow-md"
                         onClick={() => {
                           handleAddToCart(product);
                           updateStock(
@@ -225,6 +215,7 @@ const CartPage = () => {
                       </button>
                     </div>
                   </div>
+                  
                 ))}
               </div>
             </div>

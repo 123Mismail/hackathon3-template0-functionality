@@ -12,6 +12,7 @@ interface Iproducts{
   description: string,
   id:number,
   imagePath:string,
+  discountPercentage:number;
  stockLevel: number,
  price: number,
  category: string,
@@ -30,7 +31,7 @@ useEffect(()=>{
      const  fetchDataFromSannity=async()=>{
          
       const fetchedData =await  client.fetch(`*[_type == "product"  && category=="Table"]{
-  name,price,id,description,imagePath,category,stockLevel
+  name,price,id,description,imagePath,category,stockLevel,discountPercentage
 }
 `)
         console.log(fetchedData ,"trying to display fetched data from sanity ")
@@ -44,7 +45,7 @@ useEffect(()=>{
   const itemsToAdd={
     sku:String(product.id),           // SKU or ID
     name: product.name,         // Name of the product
-    price: product.price,       // Price of the product
+    price: product.price - (product.price * (product!.discountPercentage! / 100)),       // Price of the product
     quantity:product.stockLevel,                // Default quantity (can be dynamic if needed)
     imagePath: product.imagePath,
     currency: "USD"
@@ -67,6 +68,31 @@ useEffect(()=>{
         draggable: true,
         progress: undefined,
       });
+
+      const updateStock = async (
+        productId: number,
+        quantity: number,
+        action: string
+      ) => {
+        try {
+          const response = await fetch("/api/stockHandel", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productId, quantity, action }),
+          });
+    
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to update stock");
+          }
+    
+          console.log("Stock updated:", data.updatedProduct);
+        } catch (error: any) {
+          console.error("Error:", error.message);
+        }
+      };
 
       if(fetchedData == undefined){
         return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
@@ -173,37 +199,53 @@ useEffect(()=>{
               {/* main div  */}
                {
                   fetchedData ?  fetchedData.map((product:Iproducts)=>(
-                    <div className="mt-6" key={product.id}>
+                    <div
+                    className="mt-6 flex flex-col items-center justify-center"
+                    key={product.id}
+                  >
                     <Link href={`/shop/${product.id}`}>
-                      <Image
-                        src={product.imagePath}
-                        height={350}
-                        width={350}
-                        alt="blogs laptop images"
-                        className="w-[230px] h-[180px]  hover:scale-110 duration-300  object-cover"
-                      />
+                      <div className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 relative">
+                        <Image
+                          src={product.imagePath}
+                          height={350}
+                          width={350}
+                          alt="blogs laptop images"
+                          className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
+                        />
+                        <span className="absolute top-0 bg-[#FBEBB5]">{product.discountPercentage}%OFF</span>
+                      </div>
                     </Link>
-                    <div className="flex flex-col gap-6 justify-center items-center text-center">
-                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 -mb-7">
-                         {product.name}
+                    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
+                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
+                        {product.name}
                       </p>
-                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 -mb-5">
-                         {product.description}
+                      <p className="text-center pt-3 max-w-[250px] line-clamp-1 text-gray-600">
+                        {product.description}
                       </p>
-                      <span className="flex  gap-4">
-                      <p>Rs : {product.price}</p>
-                      <p>Stocks : {product.stockLevel}</p>
+                      <span className=" flex flex-col w-full gap-2 mt-2">
+                        <p className="  w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                          Rs : {product.price - (product.price * (product.discountPercentage! / 100))}
+
+                          <span className="ml-7 line-through">RS:{product.price}</span>
+                        </p>
+                        <p className=" w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
+                          Stocks : {product.stockLevel}
+                        </p>
                       </span>
-
-
                       <button
-        className=" -mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        onClick={() =>{handelAddToCard(product),notifySuccess()}}
-      >
-        Add to Cart
-      </button>
-
-
+                        className="mt-2 px-6 py-2 w-full bg-[#FBEBB5] text-black rounded-lg hover:bg-[#ecdfb4] transition-colors duration-300 shadow-md"
+                        onClick={() => {
+                          handelAddToCard(product);
+                          notifySuccess()
+                          updateStock(
+                            product.id,
+                            product.stockLevel - 1,
+                            "decrease"
+                          );
+                        }}
+                      >
+                        Add to Cart
+                      </button>
                     </div>
                   </div>
                   )) :<div className="tex-center w-full h-[400px] flex justify-center items-center ">

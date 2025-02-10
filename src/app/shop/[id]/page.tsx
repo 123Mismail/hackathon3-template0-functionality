@@ -372,7 +372,7 @@ const page = ({ params }: { params: any }) => {
         <div className=" flex flex-col justify-center items-center gap-14 pb-8 ">
           <h2 className="text-[36px] font-medium">Related Products</h2>
         </div>
-        <div className="max-w-[1240px] mx-auto    overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0    md:gap-0  ">
+        <div className="max-w-[1240px] mx-auto    overflow-hidden  flex  flex-wrap justify-center   lg:justify-between     lg:pl-0    md:gap-0  ">
           {/* related products */}
 
           {categoryProduct &&

@@ -122,7 +122,7 @@ const CartPage = () => {
       <div className="max-w-[1440px]  flex flex-wrap justify-center items-center gap-6  py-3">
         <div className="w-full bg-white">
           <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
-            <div  className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between pl-10 lg:pl-0 gap-4 md:gap-0">
+            <div  className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between  lg:pl-0 gap-4 md:gap-0">
               {/* main div  */}
 
               {fetchedData ? (

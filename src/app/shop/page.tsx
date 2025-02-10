@@ -164,11 +164,11 @@ const CartPage = () => {
 
           <div className="w-full bg-white">
             <div className="max-w-[1240px] mx-auto relative overflow-hidden py-10">
-              <div className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between pl-10 lg:pl-0 gap-4 md:gap-0">
+              <div className="max-w-[1240px] mx-auto overflow-hidden flex flex-wrap justify-center   lg:justify-between   lg:pl-0 gap-4 md:gap-0">
                 {/* Display filtered products */}
                 {fetchedData.map((product: Iproducts) => (
                   <div
-                    className="mt-6 flex flex-col items-center justify-center"
+                    className="mt-6 flex flex-col items-center justify-center  "
                     key={product.id}
                   >
                     <Link href={`/shop/${product.id}`}>

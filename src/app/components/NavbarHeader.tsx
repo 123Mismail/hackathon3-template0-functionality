@@ -89,32 +89,15 @@ const NavbarHeader = () => {
               :  <IoPersonAddOutline className="text-2xl border-none" />}
              
             </Link>
-              { isSignedIn ? <SignOutButton/> : <SignInButton/> }
-            {/* <span>
-              {" "}
-              <svg
-                className="cursor-pointer  "
-                width="34"
-                height="34"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11 7C8.239 7 6 9.216 6 11.95C6 14.157 6.875 19.395 15.488 24.69C15.6423 24.7839 15.8194 24.8335 16 24.8335C16.1806 24.8335 16.3577 24.7839 16.512 24.69C25.125 19.395 26 14.157 26 11.95C26 9.216 23.761 7 21 7C18.239 7 16 10 16 10C16 10 13.761 7 11 7Z"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span> */}
+              { isSignedIn ? <SignOutButton /> : <SignInButton/> }
+             
             <span>
               {/* <Link href={'/cart'}>
            
             </Link> */}
 
-{isSignedIn &&  <Sheet>
+{isSignedIn && 
+ <Sheet>
                 <SheetTrigger asChild className="flex justify-end items-center">
                   <button>
                     <svg
@@ -130,19 +113,19 @@ const NavbarHeader = () => {
                         fill="black"
                       />
                     </svg>
-                    <span className="mb-10 ml-10 text-base font-normal mr-0  absolute">
+                    <span className="mb-10 ml-10   text-base font-normal mr-0  absolute">
                       {totalItems}
                     </span>
                   </button>
                 </SheetTrigger>
-                <SheetContent className="flex flex-col justify-between  bg-white  px-0 min-h-[746px] max-w-[417px] w-full  overflow-y-auto ">
+                <SheetContent className="flex flex-col justify-between  bg-white  min-h-screen max-w-[417px] w-full  overflow-y-auto px-4">
                   <div className="px-5 scroll-mx-2">
                     <h3 className="text-[24px] font-semibold">Shopping Cart</h3>
                     <div className="h-[1px] w-[287px]  bg-black/40 mt-10 " />
 
                     {cartArray.length > 0 &&
                       cartArray.map((data) => (
-                        <div className="mt-5 flex  justify-between items-center gap-4">
+                        <div className="mt-5 flex  justify-start items-center   gap-10  ">
                           {data.imagePath ? (
                             <Image
                               src={data?.imagePath}
@@ -155,10 +138,10 @@ const NavbarHeader = () => {
                             <Loader />
                           )}
 
-                          <div className=" flex justify-center items-center gap-4">
+                          <div className=" flex justify-start items-center gap-4 ">
                             <div>
                               {" "}
-                              <h3 className="text-[20px] font-normal max-w-[150px] line-clamp-1">
+                              <h3 className="text-[20px] font-normal max-w-[150px] line-clamp-1  ">
                                 {data?.name}
                               </h3>
                               <span className="flex justify-between gap-4 items-center">
@@ -228,6 +211,7 @@ const NavbarHeader = () => {
             </span>
           </div>
           <div></div>
+          <div></div>
         </div>
       </div>
 
@@ -235,15 +219,15 @@ const NavbarHeader = () => {
 
       <div className="block md:hidden absolute right-10 top-[35px]   ">
         <Sheet>
-          <SheetTrigger asChild className="flex justify-end items-center ">
+          <SheetTrigger asChild className="flex justify-end items-center     ">
             <Button variant="outline">
-              <GiHamburgerMenu />
+              <GiHamburgerMenu  />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-full  h-screen overflow-y-auto">
+          <SheetContent className="w-full  h-screen overflow-y-auto  ">
             <div className="   flex flex-col justify-center items-center  max-w-[1440px]  bg-white gap-12 mx-auto pt-5">
               <div>
-                <ul className="flex flex-col justify-center items-center gap-4 tex-[16px] font-normal felx-wrap">
+                <ul className="flex   flex-col justify-center items-center gap-4 tex-[16px] font-normal felx-wrap">
                   <li className="active-underline cursor-pointer  ">
                     <Link href={"/"}>Home</Link>
                   </li>

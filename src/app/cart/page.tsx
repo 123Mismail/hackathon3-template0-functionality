@@ -50,13 +50,13 @@ const CartPage = () => {
 
       {/* card proce total  */}
 
-      <div className="max-w-[1250px]    flex-col md:flex-row  justify-center items-center gap-6 p-10">
-        <div className="   md:max-w-[817px]     flex-col  gap-10 w-full">
-          <ul className="flex flex-wrap justify-evenly items-center pl-0 md:pl-24  bg-[#FFF9E5] w-full h-[55px]  ">
+      <div className="max-w-[1250px]     md:items-center  flex-col md:flex-row md:justify-center justify-center items-center gap-6 p-10">
+        <div className="     justify-center items-center     flex-col  gap-10 w-full">
+          <ul className="flex flex-wrap justify-evenly items-center pl-0   bg-[#FFF9E5] w-full h-[55px]  ">
             <li>Product</li>
-            <li className="ml-3">Price</li>
             <li className="ml-3">Quantity</li>
-            <li>Subtotal</li>
+            <li className="ml-3">Subtotal</li>
+            <li>Delete</li>
           </ul>
 
           {detailArray.map((product) => (
@@ -94,7 +94,7 @@ const CartPage = () => {
                     : product.price}
                 </li>
                 <button
-                  className="flex-1 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition duration-300"
+                  className="flex-1 px-4 py-2 bg-red-200 text-black rounded-lg hover:bg-red-100 transition duration-300"
                   onClick={() => removeItem(product.id)}
                 >
                   Remove

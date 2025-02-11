@@ -27,7 +27,7 @@ interface Iproducts {
 const CartPage = () => {
   const { addItem } = useShoppingCart();
   const [fetchedData, setFetchedData] = useState<Iproducts[]>([]);
-  const [filteredData, setFilteredData] = useState<Iproducts[]>([]);
+   
   const [searchQuery, setSearchQuery] = useState("");
 
   const notifySuccess = () =>
@@ -111,8 +111,17 @@ const CartPage = () => {
       if (!response.ok) {
         throw new Error(data.error || "Failed to update stock");
       }
+     
+       setFetchedData((previous)=> (
+        previous.map((product)=>  product.id == productId ? {
+        ...product , stockLevel:data.updatedProduct.stockLevel
+        } : product)
+       ))  
+       
+
 
       console.log("Stock updated:", data.updatedProduct);
+       
     } catch (error: any) {
       console.error("Error:", error.message);
     }
@@ -200,19 +209,30 @@ const CartPage = () => {
                           Stocks : {product.stockLevel}
                         </p>
                       </span>
+                      
+                      {
+
+                        product && product.stockLevel>0 ? 
+
                       <button
                         className="mt-2 px-6 py-2 w-full bg-[#FBEBB5] text-black rounded-lg hover:bg-[#ecdfb4] transition-colors duration-300 shadow-md"
                         onClick={() => {
                           handleAddToCart(product);
                           updateStock(
                             product.id,
-                            product.stockLevel - 1,
+                            product.stockLevel,
                             "decrease"
                           );
                         }}
                       >
-                        Add to Cart
-                      </button>
+                        Add to card
+                      </button> 
+                      :
+                       <button className="mt-2 px-6 py-2 w-full bg-[#e7776d] text-black rounded-lg hover:bg-[#e08077] transition-colors duration-300 shadow-md">
+                        Not availabel
+                       </button>
+                      }
+
                     </div>
                   </div>
                   

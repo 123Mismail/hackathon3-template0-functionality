@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       .patch(product._id) // Use the document ID (_id) for the patch
       .set({ stockLevel: newStock })
       .commit();
-    console.log(updatedProduct);
+    console.log(updatedProduct ,"updated product is showing ");
 
     return NextResponse.json({
       message: "Stock updated",

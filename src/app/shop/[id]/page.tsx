@@ -29,10 +29,7 @@ const page = ({ params }: { params: any }) => {
   const [productId, setProductId] = useState("");
   const { cartDetails, decrementItem, incrementItem, addItem } =
     useShoppingCart();
-  // const [quantityProduct, setQuantityProduct] = useState(0);
-
-  // if (cartDetails && productsData !== undefined)
-  //   const arrayProduct = Object.values(cartDetails);
+   
 
   useEffect(() => {
     const fetchDataFromSanity = async () => {
@@ -111,10 +108,10 @@ const page = ({ params }: { params: any }) => {
       <section className=" body-font overflow-hidden">
         <div className="container flex flex-col gap-4 lg:flex-row px-5 py-24 mx-auto">
           <div className=" float-left   flex    lg:flex-col  justify-center items-center  gap-4 md:gap-10  ">
-            <div className="max-w-[76px] bg-[#FFF9E5] w-full">
+            <div className="max-w-[76px]   bg-[#FFF9E5] w-full">
               <Image
                 src={productsData?.imagePath}
-                className="object-cover rotate-[180deg]"
+                className="object-cover rotate-[180deg]  w-[250px] overflow-hidden"
                 height={220}
                 width={220}
                 alt="product imges"
@@ -123,7 +120,7 @@ const page = ({ params }: { params: any }) => {
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
                 src={productsData?.imagePath}
-                className="object-cover rotate-[90deg]"
+                className="object-cover rotate-[90deg]  w-[250px] overflow-hidden"
                 height={220}
                 width={220}
                 alt="product imges"
@@ -132,7 +129,7 @@ const page = ({ params }: { params: any }) => {
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
                 src={productsData?.imagePath}
-                className="object-cover rotate-[360deg]"
+                className="object-cover rotate-[360deg]  w-[250px] overflow-hidden"
                 height={220}
                 width={220}
                 alt="product imges"
@@ -141,7 +138,7 @@ const page = ({ params }: { params: any }) => {
             <div className="max-w-[76px] bg-[#FFF9E5] w-full">
               <Image
                 src={productsData?.imagePath}
-                className="object-cover rotate-[270deg]"
+                className="object-cover rotate-[270deg] w-[250px] overflow-hidden"
                 height={250}
                 width={250}
                 alt="product imges"
@@ -154,7 +151,7 @@ const page = ({ params }: { params: any }) => {
               height={400}
               width={400}
               alt="ecommerce"
-              className="lg:w-1/2 w-full bg-[#FFF9E5] lg:h-auto h-64 object-contain object-center rounded "
+              className="lg:w-1/2 w-full bg-[#FFF9E5]   h-64 object-cover object-bottom md:object-center rounded lg:h-[600px]"
               priority
               src={productsData?.imagePath}
             />
@@ -275,14 +272,14 @@ const page = ({ params }: { params: any }) => {
                   )}
 
                   <span
-                    className="cursor-pointer"
+                    className="cursor-pointer "
                     onClick={() => incrementItem(productId)}
                   >
                     +
                   </span>
                 </span>
                 <button
-                  className="px-12 py-4   border-2 rounded-[15px]"
+                  className="px-6 md:px-12 py-3 md:py-4   border-2 rounded-[15px] hover:ring-2 ring-[#f6d35ef6] duration-300"
                   onClick={() => {
                     addItem(productsData), notifySuccess();
                   }}

@@ -12,14 +12,14 @@ const TopPicks = () => {
           suspension, floor and table lights.
         </p>
       </div>
-      <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center   lg:justify-between   pl-10 lg:pl-0   gap-4 md:gap-0  ">
+      <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center     lg:justify-between    lg:pl-0   gap-4 md:gap-8  ">
         <div>
         <Image
             src={"/images/shop3.png"}
             height={350}
             width={350}
             alt="blogs laptop images"
-            className="w-[230px] h-[250px]   object-contain object-bottom "
+            className="w-[230px] h-[250px]   object-cover  object-bottom "
           />
           <div className="flex flex-col gap-6 justify-center items-center text-center">
             <p className="text-center pt-3">

@@ -58,7 +58,7 @@ const NavbarHeader = () => {
     <nav>
       {/* desktop navbar */}
       <div>
-        <div className="   flex justify-center items-center  max-w-[1440px] h-[100px]     bg-[#FBEBB5] gap-12 mx-auto">
+        <div className="   flex justify-center items-center  h-[100px]     bg-[#FBEBB5] gap-12 mx-auto">
           <div className="hidden md:md:block">
             <ul className="flex justify-center items-center gap-10   tex-[20px] font-normal felx-wrap">
               <li className="active-underline cursor-pointer active:underline underline-offset-4   ">
@@ -189,20 +189,20 @@ const NavbarHeader = () => {
                         Rs.{totalPrice}
                       </p>
                     </div>
-                    <div className="h-[1px] w-full bg-black/60" />
-                    <div className="flex justify-between items-center py-10 px-5">
-                      <Link href={"/cart"}>
+                    <div className="h-[1px]  w-full bg-black/60" />
+                    <div className=" flex flex-col justify-center items-center gap-2 py-10 px-5  md:flex-row     ">
+                      <span><Link href={"/cart"}>
                         {" "}
-                        <button className="px-10 py-2 rounded-full border border-spacing-4 border-black">
+                        <button className="px-10 py-2 rounded-full border border-spacing-4 border-black w-full hover:ring-2 ring-[#f6d35ef6] duration-300">
                           View Cart
                         </button>
-                      </Link>
+                      </Link></span>
 
-                      <Link href={"/checkout"}>
-                        <button className="px-10 py-2 rounded-full border border-spacing-4 border-black">
+                    <span>  <Link href={"/checkout"}>
+                        <button className="px-10 py-2 rounded-full border border-spacing-4 border-black hover:ring-2 ring-[#f6d35ef6] duration-300">
                           Checkout
                         </button>
-                      </Link>
+                      </Link></span>
                     </div>
                   </div>
                 </SheetContent>

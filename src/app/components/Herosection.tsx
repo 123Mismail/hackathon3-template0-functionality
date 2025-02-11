@@ -4,11 +4,11 @@ import Link from "next/link";
 const Herosection = () => {
   return (
     <>
-      <div className="max-w-[1440px] mx-auto bg-[#FBEBB5] overflow-hidden relative py-10 px-10 mb-10">
+      <div className="  mx-auto bg-[#FBEBB5] overflow-hidden relative py-10 px-10 mb-10">
         <div className="flex flex-wrap justify-center gap-[-20px] items-center w-full">
           {/* content */}
-          <div className="text-[#000000] pl-10 lg:pl-0">
-            <h2 className="text-[64px] text-center md:text-left font-medium md:font-semibold">
+          <div className="text-[#000000]   lg:pl-0">
+            <h2 className=" text-[50px] md:text-[64px] text-center md:text-left font-medium md:font-semibold">
               Rocket single <br /> seater
             </h2>
 

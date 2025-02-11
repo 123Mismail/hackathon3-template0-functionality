@@ -19,7 +19,7 @@ const Card = ({ image, discount, price, description }: CardData) => {
           alt="card images"
         ></Image>
 
-        <div className="absolute top-3 right-2">
+        <div className="absolute top-3 right-2 ">
           <div className="h-10 w-10 flex justify-center items-center rounded-full bg-white">
             <svg
               width="24"

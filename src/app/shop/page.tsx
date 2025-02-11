@@ -183,7 +183,7 @@ const CartPage = () => {
                         <span className="absolute top-0 bg-[#FBEBB5]">{product.discountPercentage}%OFF</span>
                       </div>
                     </Link>
-                    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
+                    <div className="flex flex-col mx-2  justify-center items-center text-center mt-4">
                       <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
                         {product.name}
                       </p>

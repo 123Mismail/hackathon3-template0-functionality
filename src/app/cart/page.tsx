@@ -50,7 +50,7 @@ const CartPage = () => {
 
       {/* card proce total  */}
 
-      <div className="max-w-[1250px]     md:items-center  flex-col md:flex-row md:justify-center justify-center items-center gap-6 p-10">
+      <div className="max-w-[1250px]  mx-auto   md:items-center  flex-col md:flex-row md:justify-center justify-center items-center gap-6 p-10">
         <div className="     justify-center items-center     flex-col  gap-10 w-full">
           <ul className="flex flex-wrap justify-evenly items-center pl-0   bg-[#FFF9E5] w-full h-[55px]  ">
             <li>Product</li>

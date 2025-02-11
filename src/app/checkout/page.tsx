@@ -883,13 +883,13 @@ const CheckoutPage = () => {
           <Link href={"/"}>CheckOut</Link>
         </span>
       </div>
-      <div className="w-full flex flex-col justify-center items-center pr-5 py-10 lg:pt-32">
-        <div className="flex flex-wrap justify-center p-10 gap-10 py-10 w-full">
+      <div className="w-full flex flex-col justify-center items-center   py-10 lg:pt-32">
+        <div className="flex flex-wrap justify-center p-10 gap-10 py-10 w-full    ">
           {/* Left Section - Billing Details */}
-          <div className="max-w-[635px] flex flex-col w-full flex-1 justify-center items-start gap-3">
+          <div className="max-w-[635px] flex flex-col w-full flex-1 justify-center items-start gap-3   ">
             <h2 className="text-[36px] font-semibold">Billing details</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex justify-center gap-4">
+              <div className="flex justify-center gap-4 ">
                 <div>
                   <span className="flex justify-center items-center gap-4 w-full">
                     <span className="w-full">
@@ -998,7 +998,7 @@ const CheckoutPage = () => {
                 <button
                 type="submit"
                 disabled={!isValid || loading}
-                className="px-10 py-2 rounded-2xl border border-1 mx-auto text-center mt-4 w-full"
+                className="px-10 py-2 rounded-2xl border border-1 mx-auto text-center mt-4 w-full hover:ring-2 ring-[#f6d35ef6] duration-300"
               >
               
                 {loading ? "Processing..." : "Proceed to Payment"}

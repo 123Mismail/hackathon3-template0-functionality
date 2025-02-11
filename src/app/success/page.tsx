@@ -82,12 +82,10 @@ const {cartDetails ,clearCart} =useShoppingCart()
   };
 
 
-    // if(isCartEmpty){
-    //   return router.push('/shop')
-    // }
+     
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+    <div className="min-h-screen py-10 flex items-center justify-center bg-gradient-to-r from-[#FFF9E5] to-[#FFF9E5]">
       <div className="bg-white p-8 rounded-lg py-4 shadow-2xl text-center transform transition-all hover:scale-100">
         <div className="flex justify-center mb-4">
           <svg
@@ -114,7 +112,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
 
         {/* Button to toggle shipping details */}
         <button
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mb-6"
+          className="    px-6 py-2 rounded-lg border border-spacing-2 border-[black] hover:ring-2 ring-[#f6d35ef6] duration-300 mb-6"
           onClick={() => {setShowShippingDetails(!showShippingDetails)}}
         >
           {showShippingDetails ? 'Hide Shipping Details' : 'View Shipping Details'}
@@ -144,7 +142,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
 
             {/* Download PDF Button */}
             <button
-              className="col-span-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors mt-4"
+              className="col-span-2  hover:ring-2 ring-[#f6d35ef6] duration-300 border border-spacing-2 border-[black] rounded-lg   px-6 py-2     mt-4"
               onClick={handleDownloadPDF}
             >
               Download Billing Details as PDF
@@ -156,7 +154,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
 
         {/* Go to Home Button */}
         <button
-          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors mt-6"
+          className=" bg-[#efd57f]   px-6 py-3 w-full   transition-colors mt-6"
           onClick={() =>{ (window.location.href = '/') ,clearCart() }}
         >
           Go to Home

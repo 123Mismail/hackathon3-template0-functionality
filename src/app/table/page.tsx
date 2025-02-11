@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
@@ -6,117 +6,121 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useShoppingCart } from 'use-shopping-cart';
+import { useShoppingCart } from "use-shopping-cart";
 
-interface Iproducts{
-  description: string,
-  id:number,
-  imagePath:string,
-  discountPercentage:number;
- stockLevel: number,
- price: number,
- category: string,
- sku: number,
- name: string
+interface Iproducts {
+  description: string;
+  id: number;
+  imagePath: string;
+  discountPercentage: number;
+  stockLevel: number;
+  price: number;
+  category: string;
+  sku: number;
+  name: string;
 }
-
 
 const CartPage = () => {
-
-  const { addItem ,cartDetails,totalPrice} = useShoppingCart();
+  const { addItem, cartDetails, totalPrice } = useShoppingCart();
   const [fetchedData, setFetchedData] = useState<Iproducts[]>();
-// fetching data 
+  // fetching data
 
-useEffect(()=>{
-     const  fetchDataFromSannity=async()=>{
-         
-      const fetchedData =await  client.fetch(`*[_type == "product"  && category=="Table"]{
+  useEffect(() => {
+    const fetchDataFromSannity = async () => {
+      const fetchedData =
+        await client.fetch(`*[_type == "product"  && category=="Table"]{
   name,price,id,description,imagePath,category,stockLevel,discountPercentage
 }
-`)
-        console.log(fetchedData ,"trying to display fetched data from sanity ")
-        setFetchedData(fetchedData)
-     }
-    
-     fetchDataFromSannity();
-},[])
+`);
+      console.log(fetchedData, "trying to display fetched data from sanity ");
+      setFetchedData(fetchedData);
+    };
 
- const handelAddToCard =(product:Iproducts)=>{
-  const itemsToAdd={
-    sku:String(product.id),           // SKU or ID
-    name: product.name,         // Name of the product
-    price: product.price - (product.price * (product!.discountPercentage! / 100)),       // Price of the product
-    quantity:product.stockLevel,                // Default quantity (can be dynamic if needed)
-    imagePath: product.imagePath,
-    currency: "USD"
-  }
-  addItem(itemsToAdd)
-  const totalItems = cartDetails ? Object.values(cartDetails).reduce((total, item) => total + item.quantity, 0) : 0;
-  console.log(cartDetails,"card detail is consoling ")
-  console.log(totalPrice,"total price of products is dispaying  ")
-  console.log(totalItems,"total no of items in card")
- }
-    
-  // toast 
-   const notifySuccess = () =>
-      toast.success("Product Added to card successfully!", {
-        position: "top-right",
-        autoClose: 2000, // Close after 2 seconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+    fetchDataFromSannity();
+  }, []);
+
+  const handelAddToCard = (product: Iproducts) => {
+    const itemsToAdd = {
+      sku: String(product.id), // SKU or ID
+      name: product.name, // Name of the product
+      price:
+        product.price - product.price * (product!.discountPercentage! / 100), // Price of the product
+      quantity: product.stockLevel, // Default quantity (can be dynamic if needed)
+      imagePath: product.imagePath,
+      currency: "USD",
+    };
+    addItem(itemsToAdd);
+    const totalItems = cartDetails
+      ? Object.values(cartDetails).reduce(
+          (total, item) => total + item.quantity,
+          0
+        )
+      : 0;
+    console.log(cartDetails, "card detail is consoling ");
+    console.log(totalPrice, "total price of products is dispaying  ");
+    console.log(totalItems, "total no of items in card");
+  };
+
+  // toast
+  const notifySuccess = () =>
+    toast.success("Product Added to card successfully!", {
+      position: "top-right",
+      autoClose: 2000, // Close after 2 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  const updateStock = async (
+    productId: number,
+    quantity: number,
+    action: string
+  ) => {
+    try {
+      const response = await fetch("/api/stockHandel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, quantity, action }),
       });
 
-      const updateStock = async (
-        productId: number,
-        quantity: number,
-        action: string
-      ) => {
-        try {
-          const response = await fetch("/api/stockHandel", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ productId, quantity, action }),
-          });
-    
-          const data = await response.json();
-          if (!response.ok) {
-            throw new Error(data.error || "Failed to update stock");
-          }
-    
-          console.log("Stock updated:", data.updatedProduct);
-        } catch (error: any) {
-          console.error("Error:", error.message);
-        }
-      };
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to update stock");
+      }
 
-      if(fetchedData == undefined){
-        return <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
-       }
+      console.log("Stock updated:", data.updatedProduct);
+    } catch (error: any) {
+      console.error("Error:", error.message);
+    }
+  };
+
+  if (fetchedData == undefined) {
+    return (
+      <p className="w-full h-1/3 text-center  p-28">Data not found ....</p>
+    );
+  }
   return (
     <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
-      <div className="w-full h-[306px] pagesBg md:max-w-[1440px]  overflow-hidden   ">
-       
-      </div>
+      <div className="w-full h-[306px] pagesBg md:max-w-[1440px]  overflow-hidden   "></div>
       <div className="  flex justify-center items-center h-[306px] flex-col z-50">
-          <Image
-            src={"/images/logo.png"}
-            className="-mb-[20px] object-cover"
-            height={100}
-            width={100}
-            alt="logo image"
-          />
-          <h2 className="text-[48px] font-medium ">Shop</h2>
-          <span className="flex justify-center items-center ">
-            <Link href={"/"}>Home</Link>
-            <MdOutlineKeyboardArrowRight />
-            <Link href={"/table"}>Tabel</Link>
-          </span>
-        </div>
+        <Image
+          src={"/images/logo.png"}
+          className="-mb-[20px] object-cover"
+          height={100}
+          width={100}
+          alt="logo image"
+        />
+        <h2 className="text-[48px] font-medium ">Shop</h2>
+        <span className="flex justify-center items-center ">
+          <Link href={"/"}>Home</Link>
+          <MdOutlineKeyboardArrowRight />
+          <Link href={"/table"}>Tabel</Link>
+        </span>
+      </div>
       <div className="max-w-[1440px]  flex flex-wrap justify-center items-center gap-6  py-3">
         <div className="w-full   h-[100px]  flex flex-wrap px-3 md:px-0 justify-around items-center">
           <div>
@@ -188,18 +192,13 @@ useEffect(()=>{
           </div>
         </div>
 
-
-
-
-
         <div className="w-full bg-white">
           <div className="max-w-[1440px] mx-auto relative overflow-hidden  py-10 ">
             <div className="max-w-[1240px] mx-auto   overflow-hidden  flex  flex-wrap justify-center   lg:justify-between    lg:pl-0   gap-4 md:gap-0  ">
-
               {/* main div  */}
-               {
-                  fetchedData ?  fetchedData.map((product:Iproducts)=>(
-                    <div
+              {fetchedData ? (
+                fetchedData.map((product: Iproducts) => (
+                  <div
                     className="mt-6 flex flex-col items-center justify-center"
                     key={product.id}
                   >
@@ -212,10 +211,12 @@ useEffect(()=>{
                           alt="blogs laptop images"
                           className="w-[230px] h-[180px] hover:scale-110 duration-300 object-cover transform transition-transform"
                         />
-                        <span className="absolute top-0 bg-[#FBEBB5]">{product.discountPercentage}%OFF</span>
+                        <span className="absolute top-0 bg-[#FBEBB5]">
+                          {product.discountPercentage}%OFF
+                        </span>
                       </div>
                     </Link>
-                    <div className="flex flex-col gap-4 justify-center items-center text-center mt-4">
+                    <div className="flex mx-2 flex-col gap-4 justify-center items-center text-center mt-4">
                       <p className="text-center pt-3 max-w-[250px] line-clamp-1 font-medium">
                         {product.name}
                       </p>
@@ -224,9 +225,12 @@ useEffect(()=>{
                       </p>
                       <span className=" flex flex-col w-full gap-2 mt-2">
                         <p className="  w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
-                          Rs : {product.price - (product.price * (product.discountPercentage! / 100))}
-
-                          <span className="ml-7 line-through">RS:{product.price}</span>
+                          Rs :{" "}
+                          {product.price -
+                            product.price * (product.discountPercentage! / 100)}
+                          <span className="ml-7 line-through">
+                            RS:{product.price}
+                          </span>
                         </p>
                         <p className=" w-full p-2 bg-gray-600 text-white rounded-lg shadow-sm">
                           Stocks : {product.stockLevel}
@@ -236,7 +240,7 @@ useEffect(()=>{
                         className="mt-2 px-6 py-2 w-full bg-[#FBEBB5] text-black rounded-lg hover:bg-[#ecdfb4] transition-colors duration-300 shadow-md"
                         onClick={() => {
                           handelAddToCard(product);
-                          notifySuccess()
+                          notifySuccess();
                           updateStock(
                             product.id,
                             product.stockLevel - 1,
@@ -248,21 +252,17 @@ useEffect(()=>{
                       </button>
                     </div>
                   </div>
-                  )) :<div className="tex-center w-full h-[400px] flex justify-center items-center ">
+                ))
+              ) : (
+                <div className="tex-center w-full h-[400px] flex justify-center items-center ">
                   Loading papge .....
                 </div>
-               }  
-             
- 
+              )}
             </div>
           </div>
         </div>
 
-
-
-
-
-         {/* pages navigation section */}
+        {/* pages navigation section */}
         <div className="flex justify-center items-center gap-6">
           <span className="h-7 w-7 bg-[#FBEBB5] flex justify-center items-center">
             1

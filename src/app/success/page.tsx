@@ -85,7 +85,7 @@ const {cartDetails ,clearCart} =useShoppingCart()
      
 
   return (
-    <div className="min-h-screen py-10 flex items-center justify-center bg-gradient-to-r from-[#FFF9E5] to-[#FFF9E5]">
+    <div className="min-h-screen py-10 flex items-center justify-center bg-gradient-to-r from-[#efeeea] to-[#d4d2cc]">
       <div className="bg-white p-8 rounded-lg py-4 shadow-2xl text-center transform transition-all hover:scale-100">
         <div className="flex justify-center mb-4">
           <svg

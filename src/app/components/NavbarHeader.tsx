@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-// import { AiOutlineShoppingCart } from "react-icons/ai";
+ 
 import { IoPersonAddOutline } from "react-icons/io5";
 import { useShoppingCart } from "use-shopping-cart";
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,16 @@ import Image from "next/image";
 import Loader from "./loader";
 import { useUser, SignInButton, SignOutButton } from "@clerk/nextjs";
 
-const NavbarHeader = () => {
-  const { isSignedIn, user } = useUser();
-
+const NavbarHeader = () => { 
+  const { isSignedIn, user } = useUser(); 
+ 
   const { cartDetails, totalPrice, removeItem } = useShoppingCart();
-  let cartArray = cartDetails ? Object.values(cartDetails) : [];
-  console.log(cartArray, "trying to console the card details in browser");
+  // const [itemsInCart , setItemsInCart] = useState <any>([])
+  let cartArray = cartDetails ? Object.values(cartDetails) : []; 
+
+  // setItemsInCart(cartArray) 
+
+   
 
   // Ensure cartDetails is not undefined before calculating totalItems
   const totalItems = cartDetails
@@ -154,7 +158,7 @@ const NavbarHeader = () => {
                                   {data.quantity}{" "}
                                   <span className="text-xl font-light">x</span>
                                   <p className="text-[#B88E2F] font-medium">
-                                    Rs.{data.price}
+                                    Rs.{Math.floor(data.price)}
                                   </p>
                                 </span>
                               </div>
@@ -185,7 +189,7 @@ const NavbarHeader = () => {
                         <h3 className="text-[16px] font-normal">Subtotal</h3>
 
                         <p className="text-[16px] font-semibold text-[#B88E2F] ">
-                          Rs.{totalPrice}
+                          Rs.{Math.floor(totalPrice as number)}
                         </p>
                       </div>
                       <div className="h-[1px]  w-full bg-black/60" />

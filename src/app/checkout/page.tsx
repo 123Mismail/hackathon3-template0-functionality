@@ -889,7 +889,7 @@ const CheckoutPage = () => {
           <div className="max-w-[635px] flex flex-col w-full flex-1 justify-center items-start gap-3   ">
             <h2 className="text-[36px] font-semibold">Billing details</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex justify-center gap-4 ">
+              <div className="flex justify-center gap-4  px-4 py-2">
                 <div>
                   <span className="flex justify-center items-center gap-4 w-full">
                     <span className="w-full">
@@ -1027,14 +1027,14 @@ const CheckoutPage = () => {
                   <div className="flex justify-between items-center">
                     <h2 className="text-[16px] font-normal">Subtotal</h2>
                     <h2 className="text-[16px] font-light">
-                      Rs. {details.quantity > 0 ? details.quantity * details.price : details.price}
+                      Rs. {details.quantity > 0 ? Math.floor(details.quantity * details.price) : Math.floor(details.price)}
                     </h2>
                   </div>
                 </div>
               ))}
               <div className="flex justify-between items-center">
                 <h2 className="text-[16px] font-normal">Total</h2>
-                <h2 className="text-[#B88E2F] text-[24px] font-bold">Rs. {totalPrice}</h2>
+                <h2 className="text-[#B88E2F] text-[24px] font-bold">Rs. {Math.floor(totalPrice)}</h2>
               </div>
             </div>
             <div className="h-[1px] max-w-[535px] mx-auto bg-black/30 w-full" />

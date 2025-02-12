@@ -27,7 +27,7 @@ const CartPage = () => {
 
 
   return (
-    <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0 ">
+    <div className=" w-full md:max-w-[1440px]  mx-auto   overflow-hidden    lg:pl-0  ">
       <div className="w-full h-[306px] pagesBg md:max-w-[1440px] overflow-hidden   "></div>
 
       {/* card detail array is displaying  */}
@@ -63,14 +63,14 @@ const CartPage = () => {
             <div key={product.id} className="border-b border-gray-200 py-4">
               {/* Desktop View */}
               <ul className="hidden md:flex justify-between items-center h-[55px] w-full">
-                <li className="bg-[#FFF9E5] -mr-5 flex-1 mb-2">
+                <li className="bg-[#FFF9E5]  max-w-[130px] flex-1 mb-2">
                   {product.imagePath ? (
                     <Image
                       src={product.imagePath}
                       height={90}
                       width={90}
                       alt="sofa set image"
-                      className="h-[70px] w-[100px] object-cover mb-3 rounded-lg"
+                      className="h-[70px] w-[100px] object-cover mb-3 rounded-lg "
                     />
                   ) : (
                     <Loader />
@@ -82,7 +82,7 @@ const CartPage = () => {
                 <li className="mr-5 ml-4 md:ml-0 flex-1 text-gray-600">
                   Rs {product.price}
                 </li>
-                <li className="flex-1">
+                <li className="flex-1 ">
                   <span className="h-[20px] w-[20px] border p-2 rounded-lg border-gray-300 mr-10 flex items-center justify-center text-gray-700">
                     {product.quantity}
                   </span>
@@ -90,8 +90,8 @@ const CartPage = () => {
                 <li className="mr-8 flex-1 text-gray-700 font-semibold">
                   Rs{" "}
                   {product.quantity > 1
-                    ? product.quantity * product.price
-                    : product.price}
+                    ? Math.floor( product.quantity * product.price)
+                    : Math.floor(product.price)}
                 </li>
                 <button
                   className="flex-1 px-4 py-2 bg-red-200 text-black rounded-lg hover:bg-red-100 transition duration-300"
@@ -119,11 +119,11 @@ const CartPage = () => {
                     {product.name}
                   </span>
                   <span className="text-gray-600">Rs {product.price}</span>
-                  <span className="text-gray-700 font-semibold">
+                  <span className="text-gray-700 font-semibold ">
                     Total: Rs{" "}
                     {product.quantity > 1
-                      ? product.quantity * product.price
-                      : product.price}
+                      ? Math.floor( product.quantity * product.price)
+                      : Math.floor(product.price) }
                   </span>
                   <button
                     className="px-3 h-10 bg-red-400 text-white rounded-lg hover:bg-red-500 transition duration-300"
@@ -143,14 +143,14 @@ const CartPage = () => {
             {" "}
             Subtotal{" "}
             <p className="text-[#9F9F9F] text-[16px] font-normal">
-              Rs. {totalPrice}
+              Rs.  {Math.floor(totalPrice as number)}
             </p>
           </span>
           <span className="flex justify-between items-center gap-8 text-[16] font-medium">
             {" "}
             Total{" "}
             <p className="text-[#B88E2F] text-[20px] font-medium">
-              Rs. {totalPrice}
+              Rs. {Math.floor(totalPrice as number)}
             </p>
           </span>
           <Link href={"/checkout"}>

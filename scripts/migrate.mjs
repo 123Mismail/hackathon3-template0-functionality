@@ -11,12 +11,14 @@ const {
   NEXT_PUBLIC_SANITY_AUTH_TOKEN, // Sanity API token
   BASE_URL = "https://giaic-hackathon-template-08.vercel.app", // API base URL for products and categories
 } = process.env;
-console.log(NEXT_PUBLIC_SANITY_PROJECT_ID ,"project id is consoling ")
-console.log(NEXT_PUBLIC_SANITY_DATASET ,"project dataset  is consoling ")
-console.log(NEXT_PUBLIC_SANITY_AUTH_TOKEN ,"project id is consoling ")
+console.log(NEXT_PUBLIC_SANITY_PROJECT_ID, "project id is consoling ");
+console.log(NEXT_PUBLIC_SANITY_DATASET, "project dataset  is consoling ");
+console.log(NEXT_PUBLIC_SANITY_AUTH_TOKEN, "project id is consoling ");
 // Check if the required environment variables are provided
 if (!NEXT_PUBLIC_SANITY_PROJECT_ID || !NEXT_PUBLIC_SANITY_AUTH_TOKEN) {
-  console.error("Missing required environment variables. Please check your .env.local file.");
+  console.error(
+    "Missing required environment variables. Please check your .env.local file."
+  );
   process.exit(1); // Stop execution if variables are missing
 }
 
@@ -40,9 +42,13 @@ async function uploadImageToSanity(imageUrl) {
     const buffer = await response.arrayBuffer();
 
     // Upload the image to Sanity and get its asset ID
-    const uploadedAsset = await targetClient.assets.upload("image", Buffer.from(buffer), {
-      filename: imageUrl.split("/").pop(), // Use the file name from the URL
-    });
+    const uploadedAsset = await targetClient.assets.upload(
+      "image",
+      Buffer.from(buffer),
+      {
+        filename: imageUrl.split("/").pop(), // Use the file name from the URL
+      }
+    );
 
     return uploadedAsset._id; // Return the asset ID
   } catch (error) {
@@ -56,18 +62,10 @@ async function migrateData() {
   console.log("Starting data migration...");
 
   try {
- 
-
     // Fetch products from the REST API
     const productsResponse = await fetch(`${BASE_URL}/api/products`);
     if (!productsResponse.ok) throw new Error("Failed to fetch products.");
     const productsData = await productsResponse.json(); // Parse response to JSON
-
-   
-   
-
-     
- 
 
     // Migrate products
     for (const product of productsData) {
@@ -76,7 +74,7 @@ async function migrateData() {
 
       // Prepare the new product object
       const newProduct = {
-        _type: 'product',
+        _type: "product",
         id: product.id,
 
         name: product.name,
@@ -97,7 +95,7 @@ async function migrateData() {
     console.log("Data migration completed successfully!");
   } catch (error) {
     console.error("Error during migration:", error.message);
-    console.log("error while sending data to the sanity ")
+    console.log("error while sending data to the sanity ");
     process.exit(1); // Stop execution if an error occurs
   }
 }

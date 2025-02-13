@@ -398,7 +398,7 @@ const page = ({ params }: { params: any }) => {
                     </button>
                   </Link>
                   <button
-                    className="px-10 py-3 bg-blue-700 text-white hover:bg-blue-600   scale-110 duration-200"
+                    className="px-10 py-3 bg-[#FBEBB5] text-black hover:bg-[#f8e8b5]   scale-110 duration-200"
                     onClick={() => {
                       addItem(categoryProduct.id), notifySuccess();
                     }}

@@ -33,12 +33,8 @@ const CartPage = () => {
   const [errors, setErrors] = useState<string>("");
   const [initialPage, setInitialPage] = useState<number>(1);
   const [paginationLimit, setPaginationLimit] = useState<number>(1);
-  const [itemsPerPage, setShowProducts] = useState<number>(8);
-  const [sortedBy, setSortedBy] = useState<
-    "Sofa" | "Chair" | "Table" | "Bed" | "Default"
-  >("Default");
-  console.log(sortedBy, "trying to get the by sorting by category ");
-  console.log(fetchedData, "fetching products on the basis of category ");
+  const itemsPerPage = 12;
+
   const notifySuccess = () =>
     toast.success("Product Added to cart successfully!", {
       position: "top-right",
@@ -54,57 +50,43 @@ const CartPage = () => {
   useEffect(() => {
     const fetchDataFromSanity = async () => {
       try {
-        let fetchedData;
         // Fetch data from Sanity
-        if (sortedBy == "Default") {
-          fetchedData = await client.fetch(`*[_type == "product" ]{
+        const fetchedData =
+        await client.fetch(`*[_type == "product"  && category=="Chair"]{
   name,price,id,description,imagePath,category,stockLevel,discountPercentage
 }`);
-        } else {
-          fetchedData = await client.fetch(
-            `*[_type == "product"  && category == $sortedBy]{
-   name,price,id,description,imagePath,category,stockLevel,discountPercentage
- }`,
-            { sortedBy }
-          );
-        }
-        console.log(fetchedData, "trying to check the data ");
+          console.log(fetchedData ,"trying to check the data ")
         // Ensure unique data based on id
-        const uniqueData = Array.from(
-          new Set(fetchedData.map((product: Iproducts) => product.id))
-        ).map((id) =>
-          fetchedData.find((product: Iproducts) => product.id === id)
-        );
-
+        const uniqueData = Array.from(new Set(fetchedData.map((product:Iproducts) => product.id)))
+          .map(id => fetchedData.find((product :Iproducts) => product.id === id));
+  
         // Filter data based on searchQuery
         let filteredData = uniqueData;
         if (searchQuery) {
-          filteredData = uniqueData.filter((product: Iproducts) => {
-            const matchesCategory =
-              sortedBy === "Default" || product.category === sortedBy;
-            const productByName =
-              product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              product.name.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesCategory && productByName;
-          });
+          filteredData = uniqueData.filter(
+            (product: Iproducts) => {
+              const productCategroyVise= product.category=="Chair";
+             const productByName= product.name.toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              product.name.toLowerCase().includes(searchQuery.toLowerCase())
+             return (productCategroyVise && productByName)
+            }
+          );
         }
-        console.log(
-          filteredData,
-          "trying to fetch data from sanity which matches the require conditions "
-        );
+        console.log(filteredData ,"trying to fetch data from sanity which matches the require conditions ")
         // Update total products count
         setTotalProducts(filteredData.length);
-
+  
         // Paginate the filtered data
         const startIndex = (paginamtionInd - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const paginatedData = filteredData.slice(startIndex, endIndex);
-        console.log(paginatedData, "trying to check data after paginated ");
+        console.log(paginatedData ,"trying to check data after paginated ")
         // Update state with paginated data
         setFetchedData(paginatedData);
         setInitialPage(startIndex + 1);
         setPaginationLimit(Math.min(endIndex, filteredData.length));
-
+  
         // Handle errors if no products are found
         if (filteredData.length === 0) {
           setErrors("No Products to show");
@@ -116,10 +98,10 @@ const CartPage = () => {
         setErrors("Error fetching data");
       }
     };
-
+  
     // Fetch data when the component mounts or searchQuery changes
     fetchDataFromSanity();
-  }, [searchQuery, paginamtionInd, sortedBy,itemsPerPage]); // Only depend on searchQuery
+  }, [searchQuery, paginamtionInd]); // Only depend on searchQuery
   const handleAddToCart = (product: Iproducts) => {
     const itemsToAdd = {
       sku: String(product.id),
@@ -195,17 +177,15 @@ const CartPage = () => {
           width={100}
           alt="logo image"
         />
-        {  sortedBy === "Default" ?  <h2 className="text-[48px] font-medium">Shop</h2> :  <h2 className="text-[48px] font-medium">{sortedBy}</h2>  }
-        
+        <h2 className="text-[48px] font-medium">Chair</h2>
         <span className="flex justify-center items-center">
           <Link href={"/"}>Home</Link>
           <MdOutlineKeyboardArrowRight />
-          { sortedBy === "Default" ? <Link href={"/"}>Shop</Link> : <Link href={"/"}>{sortedBy}</Link> }
-        
+          <Link href={"/"}>Chairs</Link>
         </span>
       </div>
-      <div className="w-full   h-[120px]  flex flex-wrap px-3 md:px-0 justify-around items-center">
-        <div className="py-3 -mb-5">
+      <div className="w-full   h-[100px]  flex flex-wrap px-3 md:px-0 justify-around items-center">
+        <div>
           <ul className="flex justify-start gap-7 items-center">
             <li className="flex gap-1">
               {" "}
@@ -258,56 +238,12 @@ const CartPage = () => {
             </li>
           </ul>
         </div>
-        <div className="">
-          <ul className="flex justify-start items-center  gap-6">
-            <li className="flex justify-between items-center gap-2">
-              <span className="  flex justify-center items-center">
-                <label htmlFor="Products count" className="px-2">
-                  Show{" "}
-                  <input
-                    type="text"
-                    value={itemsPerPage}
-                    className="w-6 h-5 border-none outline-none text-center text-lg"
-                    onChange={(e) => setShowProducts(Number(e.target.value))}
-                  />
-                </label>
-              </span>
-            </li>
-            <li className="flex justify-between items-center gap-3">
-              Short by{" "}
-              <span className="px-2 py-1 border border-1 bg-white/90">
-                <select
-                  name="Category"
-                  id="category"
-                  className="outline-none p-1"
-                  value={sortedBy} // Bind the state variable to the select value
-                  onChange={(e) =>
-                    setSortedBy(
-                      e.target.value as
-                        | "Sofa"
-                        | "Chair"
-                        | "Table"
-                        | "Bed"
-                        | "Default"
-                    )
-                  }
-                >
-                  <option value="Default">Default</option>
-                  <option value="Table">Table</option>
-                  <option value="Chair">Chair</option>
-                  <option value="Bed">Bed</option>
-                  <option value="Sofa">Sofa</option>
-                </select>
-              </span>
-            </li>
-          </ul>
-        </div>
       </div>
       {/* Search Input */}
-      <div className="max-w-[540px]  mx-auto p-4 -mb-8  md:-mt-6  ">
-        <input
+      <div className="max-w-[540px]  mx-auto p-4 -mt-6  ">
+        <input 
           type="text"
-          placeholder="Search by name of product related ctegory (e.g.Alpha Table)"
+          placeholder="Search by name of product related ctegory (e.g.Chair Wibe)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-yellow-700 rounded-xl"
@@ -315,7 +251,7 @@ const CartPage = () => {
       </div>
 
       {fetchedData.length == 0 ? (
-        <ProductSkeleton  />
+        <ProductSkeleton />
       ) : (
         <div className="max-w-[1440px] flex flex-wrap justify-center items-center gap-6 pb-3">
           <div className="w-full h-[100px] flex flex-wrap px-3 md:px-0 justify-around items-center">
@@ -451,3 +387,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+ 

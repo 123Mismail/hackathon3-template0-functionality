@@ -277,6 +277,7 @@ const CartPage = () => {
               Short by{" "}
               <span className="px-2 py-1 border border-1 bg-white/90">
                 <select
+                title="category options"
                   name="Category"
                   id="category"
                   className="outline-none p-1"
@@ -292,11 +293,11 @@ const CartPage = () => {
                     )
                   }
                 >
-                  <option value="Default">Default</option>
-                  <option value="Table">Table</option>
-                  <option value="Chair">Chair</option>
-                  <option value="Bed">Bed</option>
-                  <option value="Sofa">Sofa</option>
+                  <option value="Default" onClick={()=> setPaginationInd(1)}>Default</option>
+                  <option value="Table" onClick={()=> setPaginationInd(1)}>Table</option>
+                  <option value="Chair" onClick={()=> setPaginationInd(1)}>Chair</option>
+                  <option value="Bed" onClick={()=> setPaginationInd(1)}>Bed</option>
+                  <option value="Sofa" onClick={()=> setPaginationInd(1)}>Sofa</option>
                 </select>
               </span>
             </li>

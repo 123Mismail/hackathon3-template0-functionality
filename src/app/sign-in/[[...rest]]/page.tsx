@@ -1,16 +1,21 @@
 
 "use client"
-import { SignIn } from '@clerk/nextjs';
+import SignInFallbackUI from '@/app/components/signInFallbackui';
+import { SignIn, useClerk } from '@clerk/nextjs';
 
-export default function SignInPage() {
+export default function SignInPage() { 
+  const {loaded} =useClerk();
+  
  
-  // const styles =style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }} 
-    if(!SignIn){
-      return <p className='flex justify-center items-center '>Network error ...</p>
-    }
+    
   return (
-    <div  className='py-6 flex justify-center items-center '>
-      <SignIn path="/sign-in" routing="path" signInUrl="/sign-up" />
+    <div  className='py-6 flex justify-center items-center '> 
+       {
+        loaded ? 
+        <SignIn path="/sign-in" routing="path" signInUrl="/sign-up" />
+        :
+        <SignInFallbackUI/>
+       }
     </div>
   );
 }

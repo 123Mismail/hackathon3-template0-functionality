@@ -536,7 +536,7 @@ const page = ({ params }: { params: any }) => {
                 <label htmlFor="feedback" className="text-center text-black">
                   Feedback <br />
                   <Textarea
-                    className=" w-[300px] text-lg  "
+                    className=" w-[350px] text-lg  "
                     onChange={(e) =>
                       setFeedBack({ ...feedBack, feedback: e.target.value })
                     }

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger ,SheetClose } from "@/components/ui/sheet";
  
 import { IoPersonAddOutline } from "react-icons/io5";
 import { useShoppingCart } from "use-shopping-cart";
@@ -105,7 +105,7 @@ const NavbarHeader = () => {
                 <Sheet>
                   <SheetTrigger
                     asChild
-                    className="flex justify-end items-center"
+                    className="flex justify-end  items-center"
                   >
                     <button>
                       <svg
@@ -126,12 +126,12 @@ const NavbarHeader = () => {
                       </span>
                     </button>
                   </SheetTrigger>
-                  <SheetContent className="flex flex-col justify-between  bg-white  min-h-screen max-w-[417px] w-full  overflow-y-auto px-4">
+                  <SheetContent className="flex flex-col justify-between  bg-gray-100 min-h-screen h-full pb-16 max-w-[417px] w-full  overflow-y-auto px-4">
                     <div className="px-5 scroll-mx-2">
                       <h3 className="text-[24px] font-semibold">
                         Shopping Cart
                       </h3>
-                      <div className="h-[1px] w-[287px]  bg-black/40 mt-10 " />
+                      <div className="h-[1px] w-[287px]    bg-black/40 mt-10 " />
 
                       {cartArray.length > 0 &&
                         cartArray.map((data) => (
@@ -197,18 +197,24 @@ const NavbarHeader = () => {
                         <span>
                           <Link href={"/cart"}>
                             {" "}
-                            <button className="px-10 py-2 rounded-full border border-spacing-4 border-black w-full hover:ring-2 ring-[#f6d35ef6] duration-300">
+                          <SheetClose>
+                          <button className="px-10 py-2 rounded-full border border-spacing-4 border-black w-full hover:ring-2 ring-[#f6d35ef6] duration-300">
                               View Cart
                             </button>
+                          </SheetClose>
                           </Link>
                         </span>
 
                         <span>
                           {" "}
                           <Link href={"/checkout"}>
-                            <button className="px-10 py-2 rounded-full border border-spacing-4 border-black hover:ring-2 ring-[#f6d35ef6] duration-300">
+                          <SheetClose>
+
+                          <button className="px-10 py-2 rounded-full border border-spacing-4 border-black hover:ring-2 ring-[#f6d35ef6] duration-300">
                               Checkout
                             </button>
+                          </SheetClose>
+                          
                           </Link>
                         </span>
                       </div>
@@ -232,21 +238,44 @@ const NavbarHeader = () => {
               <GiHamburgerMenu />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-full  h-screen overflow-y-auto  ">
+          <SheetContent className="w-full    h-screen overflow-y-auto  ">
             <div className="   flex flex-col justify-center items-center  max-w-[1440px]  bg-white gap-12 mx-auto pt-5">
               <div>
                 <ul className="flex   flex-col justify-center items-center gap-4 tex-[16px] font-normal felx-wrap">
                   <li className="active-underline cursor-pointer  ">
-                    <Link href={"/"}>Home</Link>
+
+                    <Link href={"/"}>
+                    <SheetClose>
+                    
+                    Home
+                    
+                    </SheetClose>
+                    </Link>
                   </li>
                   <li className="active-underline cursor-pointer">
-                    <Link href={"/shop"}>Shop</Link>
+                   <Link href={"/shop"}>
+                    <SheetClose>
+                   
+                   Shop
+                    </SheetClose>
+                   </Link>
                   </li>
                   <li className="active-underline cursor-pointer">
-                    <Link href={"/"}>About</Link>
+
+                    <Link href={"/"}>
+                    <SheetClose>
+                    About
+                    </SheetClose>
+                    </Link>
                   </li>
                   <li className="active-underline cursor-pointer">
-                    <Link href={"/contact"}>Contact</Link>
+
+                    <Link href={"/contact"}>
+                    <SheetClose>
+                    
+                    Contact
+                    </SheetClose>
+                    </Link>
                   </li>
                 </ul>
               </div>
